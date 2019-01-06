@@ -3,6 +3,8 @@
 #include <string>
 #include "../Headers/Maze.h"
 #include "../Headers/Heuristic.h"
+#include "../Headers/Path.h"
+#include "../Headers/Point.h"
 
 using namespace std;
 
@@ -15,36 +17,40 @@ rm Heuristic.o main.o my_program
 */
 
 bool testSlidable(){
-    
+    /*
+        1. Alternate Connectivity. 
+            There needs to exist alternate path for all path location EXCEPT the last one
+        2. Initial Blank - In the path, the first space needs to be empty
+            There needs to exist a path in general
+        3. 
+    */  
 
-    return false;
+
+    return true;
 }
 
 int main(){
-    // Piece piece(3,4, 'c');
-    // piece.toString();
-
-    // cout << straightLine(3,4, 1,2) << endl;
-    // char maze[16][21] = {			
-	// 			{'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'},	// 1
-	// 			{'X','O',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','O',' ',' ','X'},	// 2
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 3
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X','O','O','X',' ',' ','X',' ',' ','X',' ','X'},	// 4
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X','O','O','X',' ',' ','X',' ',' ','X',' ','X'},	// 5
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','O','X',' ',' ','X',' ','X'},	// 6
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 7
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 8
-	// 			{'X','O',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 9
-	// 			{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 10
-	// 			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 11
-	// 			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 12
-	// 			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 13
-	// 			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 14
-	// 			{'X','W','W','W','W','W','W','W','W',' ',' ',' ','G','G','G','G','G','G','G','G','X'},	// 15                                                          {'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'},	// 16
-    //         };
-    
     Maze maze;
-    maze.toString();
+    // maze.toString();
+
+    // if (! testSlidable()){
+    //     cout << "Current maze is NOT slidable." << endl;
+    //     return 1;
+    // }
+
+    char** sMaze = maze.getSimpleMatrix();
+
+    for(int i = 0; i < maze.getRowCount(); i++){
+        for (int j = 0; j < maze.getColCount(); j++){
+            cout << sMaze[i][j] << " " ;
+        } cout << endl;
+    }
+    cout << "------start------" << endl;
+    vector<Point> ree = getbfsPath(Point(5,2), Point(1,5), maze);
+    for(int x = 0; x < ree.size(); x++){
+        cout << ree.at(x).toString() << endl;
+    }
+
 
     return 0;
 }

@@ -9,8 +9,8 @@
 
 using namespace std;
 
-const int ROWCOUNT = 3;
-const int COLCOUNT = 2;
+const int ROWCOUNT = 7;
+const int COLCOUNT = 7;
 
 class Maze {
     private:
@@ -27,6 +27,7 @@ class Maze {
         void toString();
         void placePiece(int, int, int, int);
         Maze *getBoard() { if (! (this -> maze)) { maze = new Maze(); } return maze; }
+        char ** getSimpleMatrix();
 };
 
 #endif // MAZE_H
