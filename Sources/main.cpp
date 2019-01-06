@@ -45,12 +45,9 @@ int main(){
             cout << sMaze[i][j] << " " ;
         } cout << endl;
     }
-    cout << "------start------" << endl;
-    vector<Point> ree = getbfsPath(Point(5,2), Point(1,5), maze);
-    for(int x = 0; x < ree.size(); x++){
-        cout << ree.at(x).toString() << endl;
-    }
-
+    // cout << "------start------" << endl;
+    vector<Point> ree = getbfsPath(Point(5,2), Point(1,6), maze); // B
+    vector<Point> ree2 = getbfsPath(Point(5,1), Point(1,2), maze); // A
 
     return 0;
 }

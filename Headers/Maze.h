@@ -10,7 +10,7 @@
 using namespace std;
 
 const int ROWCOUNT = 7;
-const int COLCOUNT = 7;
+const int COLCOUNT = 10;
 
 class Maze {
     private:

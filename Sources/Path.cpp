@@ -25,24 +25,29 @@ bool getbfsPathUtil(char ** maze, int currX, int currY, Point dest, int xLimit, 
         if(getbfsPathUtil(maze, currX+1, currY, dest, xLimit, yLimit, path)){
             return true;
         } 
-        if(getbfsPathUtil(maze, currX-1, currY, dest, xLimit, yLimit, path)){
+        if(getbfsPathUtil(maze, currX, currY+1, dest, xLimit, yLimit, path)){
             return true;
         } 
-        if(getbfsPathUtil(maze, currX, currY+1, dest, xLimit, yLimit, path)){
+        if(getbfsPathUtil(maze, currX+1, currY, dest, xLimit, yLimit, path)){
             return true;
         } 
         if(getbfsPathUtil(maze, currX, currY-1, dest, xLimit, yLimit, path)){
             return true;
         } 
-        
+        maze[currX][currY] = ' ';
+        // path.pop_back();
+
+        cout << path.size() << " since not found" << endl;
+
             // Find what we added in the path and remove it
                 // TODO: Optimize into a hashlist (if that's a thing...)
             for(int i = 0; i < path.size(); i++){
                 if(path.at(i).getX() == currX && path.at(i).getY() == currY){
                     cout << "REMOVED!!!" << path.at(i).getX() << ", " << path.at(i).getY() << endl;
-                    path.erase(path.begin() + i + 1);
+                    path.erase(path.begin() + i );
                 }
             }
+            
             return false;
         
     }
@@ -50,14 +55,107 @@ bool getbfsPathUtil(char ** maze, int currX, int currY, Point dest, int xLimit, 
     return false;
 }
 
+struct queueNode { 
+    int x;
+    int y;
+    int predX;
+    int predY;
+}; 
+
 vector<Point> getbfsPath(Point src, Point dest, Maze maze){
     vector<Point> path;
 
     char ** mat = maze.getSimpleMatrix();
 
-    if (! getbfsPathUtil(mat, src.getX(), src.getY(), dest, maze.getRowCount(), maze.getColCount(), path)) {
-        return vector<Point>();
-    }
+    int rowCount = maze.getRowCount();
+    int colCount = maze.getColCount();
     
+    if (!mat[src.getX()][src.getY()] || !mat[dest.getX()][dest.getY()]) {
+        return vector<Point>(); 
+    }
+  
+    queue<queueNode> queue; 
+    vector<queueNode> predecessor;
+
+    queueNode s = {src.getX(), src.getY()};
+    queue.push(s); 
+  
+    const int rowNum[] = {-1, 0, 0, 1}; 
+    const int colNum[] = {0, -1, 1, 0}; 
+
+    bool visited[rowCount][colCount]; 
+    memset(visited, false, sizeof visited); 
+    visited[src.getX()][src.getY()] = true; 
+
+    while (!queue.empty()) { 
+        queueNode curr = queue.front(); 
+        queue.pop();
+        int currX = curr.x;
+        int currY = curr.y;
+        // cout << currX << "," << currY << endl;
+        predecessor.push_back(curr);
+
+        if (! (currX == dest.getX() && currY == dest.getY()) ) {  
+            queueNode nextPosition = {currX + 1, currY, currX, currY};
+            if (isValid(currX+1, currY, rowCount, colCount, mat) && visited[currX+1][currY] == false){
+                queue.push(nextPosition);
+                visited[currX+1][currY] = true;
+            }
+            queueNode nextPosition2 = {currX , currY + 1, currX, currY};
+            if (isValid(currX, currY + 1, rowCount, colCount, mat) && visited[currX][currY+1] == false){
+                queue.push(nextPosition2);
+                visited[currX][currY + 1] = true;
+            }
+            queueNode nextPosition3 = {currX - 1, currY, currX, currY};
+            if (isValid(currX-1, currY, rowCount, colCount, mat) && visited[currX-1][currY] == false){
+                queue.push(nextPosition3);
+                visited[currX-1][currY] = true;
+            }
+            queueNode nextPosition4 = {currX, currY-1, currX, currY};
+            if (isValid(currX, currY-1, rowCount, colCount, mat) && visited[currX][currY-1] == false){
+                queue.push(nextPosition4);
+                visited[currX][currY-1] = true;
+            }
+            // for (int i = 0; i < 4; i++) { 
+            //     int row = currX + rowNum[i]; 
+            //     int col = currY + colNum[i]; 
+                
+            //     if (isValid(row, col, rowCount, colCount) ) { 
+            //         visited[row][col] = true; 
+            //         queueNode Adjcell = { row, col, curr.dist + 1 }; 
+            //         q.push(Adjcell); 
+            //     } 
+            // } 
+        } else {
+            break;
+        }
+    }  
+    
+    //TODO: SERIOUSLY OPTIMIZE THIS, IT HURTS TO LOOK AT
+    int testX = -1;
+    int testY = -1;
+    reverse(predecessor.begin(), predecessor.end());
+    for(int i = 0; i < predecessor.size(); i++) {
+        // cout << predecessor.at(i).x << " and " << predecessor.at(i).y << " - " << predecessor.at(i).predX << " and " << predecessor.at(i).predY << endl; 
+        // cout << testX << ", " << testY << endl; 
+        if(testX == -1 && testY == -1){
+            testX = predecessor.at(i).predX;
+            testY = predecessor.at(i).predY;
+            path.push_back(Point(predecessor.at(i).x, predecessor.at(i).y));
+            continue;
+        } 
+        if(testX == predecessor.at(i).x && testY == predecessor.at(i).y){
+            path.push_back(Point(predecessor.at(i).x, predecessor.at(i).y));
+            testX = predecessor.at(i).predX;
+            testY = predecessor.at(i).predY;
+        }
+    }
+    reverse(path.begin(), path.end());
+
+    for(int i = 0; i < path.size(); i++){
+        cout << "FINAL: " << path.at(i).getX() << ", " << path.at(i).getY() << endl; 
+    }
+
     return path;
 }
+
