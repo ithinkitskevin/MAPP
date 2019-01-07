@@ -10,8 +10,8 @@
 
 using namespace std;
 
-const int ROWCOUNT = 7;
-const int COLCOUNT = 10;
+const int ROWCOUNT = 16;
+const int COLCOUNT = 21;
 
 class Maze {
     private:

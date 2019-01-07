@@ -4,6 +4,6 @@
 #include "Point.h"
 #include "Maze.h"
 
-vector<Point> getbfsPath(Point, Point , Maze , Point);
+vector<Point> getbfsPath(Point, Point , char**, int, int , Point);
 
 #endif // PATH_H

@@ -16,6 +16,51 @@ g++ -c Heuristic.cpp main.cpp Maze.cpp Path.cpp Piece.cpp Point.cpp && g++ Heuri
 rm Heuristic.o main.o my_program
 */
 
+void createMaze(){
+    // Create a piece from 2d Matrix...
+    const int rowCount = 16;
+    const int colCount = 21;
+
+    char fooMat[rowCount][colCount] = {
+        		{'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'},	// 1
+				{'X','O',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','O',' ',' ','X'},	// 2
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 3
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X','O','O','X',' ',' ','X',' ',' ','X',' ','X'},	// 4
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X','O','O','X',' ',' ','X',' ',' ','X',' ','X'},	// 5
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','O','X',' ',' ','X',' ','X'},	// 6
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 7
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 8
+				{'X','O',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 9
+				{'X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ',' ','X',' ','X'},	// 10
+				{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 11
+				{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 12
+				{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 13
+				{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},	// 14
+				{'X','W','W','W','W','W','W','W','W',' ',' ',' ','G','G','G','G','G','G','G','G','X'},	// 15
+				{'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'}	// 16
+
+    };
+
+
+
+    for(int r = 0; r < rowCount; r++) {
+        for (int c = 0; c < colCount; c++){
+                string newC = " ";
+
+                if (fooMat[r][c] == ' ') {
+                    newC = "SPACE";
+                } else if (fooMat[r][c] ==  'X') {
+                    newC = "WALL";
+                } else if (fooMat[r][c] == 'O') {
+                    newC = "\'A\'";
+                } else if (fooMat[r][c] == 'W') {
+                    newC = "\'a\'";
+                }
+            cout << "this -> board[" << r << "][" << c << "] = new Piece(" << r << "," << c <<  "," << newC << ");" << endl;
+        }
+    }
+}
+
 void printVector(vector<Point> p){
     for(int i = 0; i < p.size() ; i++){
         cout << p.at(i).getX() << ", " << p.at(i).getY();
@@ -31,7 +76,7 @@ bool testSlidable(Maze maze){
             There needs to exist alternate path for all path location EXCEPT the last one
         2. Initial Blank - In the path, the first space needs to be empty
             There needs to exist a path in general
-        3. 
+        3. Target Isolation
     */      
     maze.setUp();
     for(int i = 0; i < maze.getActiveUnits().size(); i++){
@@ -51,7 +96,7 @@ bool testSlidable(Maze maze){
 
     // Alternate Connectivity, First Rule.
     for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
-        if(maze.getActiveUnits().at(i).getAlterConnect == false) {
+        if(maze.getActiveUnits().at(i).getAlterConnect() == false) {
             return false;
         }
     }
@@ -61,8 +106,25 @@ bool testSlidable(Maze maze){
     return true;
 }
 
+void doProgression(){
+    // Sort by Priority
+} 
+
+void doRegression() {
+    
+}
+
 int main(){
     Maze maze;
+    // maze.toString();
+    //    char** sMaze = maze.getSimpleMatrix();
+
+    // for(int i = 0; i < maze.getRowCount(); i++){
+    //     cout << "| ";
+    //     for (int j = 0; j < maze.getColCount(); j++){
+    //         cout << sMaze[i][j] << " " ;
+    //     } cout << "|" << endl;
+    // }
     maze.setUp();
 
     if (! testSlidable(maze)){
@@ -70,13 +132,7 @@ int main(){
         return 1;
     }
 
-    char** sMaze = maze.getSimpleMatrix();
-
-    for(int i = 0; i < maze.getRowCount(); i++){
-        for (int j = 0; j < maze.getColCount(); j++){
-            cout << sMaze[i][j] << " " ;
-        } cout << endl;
-    }
+ 
 
     return 0;
 }

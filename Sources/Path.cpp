@@ -62,13 +62,14 @@ struct queueNode {
     int predY;
 }; 
 
-vector<Point> getbfsPath(Point src, Point dest, Maze maze, Point alterPath){
+vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int colCount, Point alterPath){
+    cout << "Starting BFS Path "  << endl;
     vector<Point> path;
+         
+    char ** mat = maze;
 
-    char ** mat = maze.getSimpleMatrix();
-
-    int rowCount = maze.getRowCount();
-    int colCount = maze.getColCount();
+    // int rowCount = maze.getRowCount();
+    // int colCount = maze.getColCount();
     
     if (!mat[src.getX()][src.getY()] || !mat[dest.getX()][dest.getY()]) {
         return vector<Point>(); 
@@ -82,6 +83,7 @@ vector<Point> getbfsPath(Point src, Point dest, Maze maze, Point alterPath){
   
     const int rowNum[] = {-1, 0, 0, 1}; 
     const int colNum[] = {0, -1, 1, 0}; 
+    cout << "Ending " << endl;
 
     bool visited[rowCount][colCount]; 
     memset(visited, false, sizeof visited); 
