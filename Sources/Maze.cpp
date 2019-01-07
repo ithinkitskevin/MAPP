@@ -1,5 +1,6 @@
 #include "../Headers/Maze.h"
 #include "../Headers/Piece.h"
+#include "../Headers/Path.h"
 
 #include <iostream>
 
@@ -96,8 +97,11 @@ Maze::Maze() {
     this -> board[6][9] = new Piece(6,9,WALL);
     
 }
+
+
+
 Maze::~Maze() {
-    cout << "Removed Maze" << endl;
+    // cout << "Removed Maze" << endl;
 }
 
 void Maze::toString() {
@@ -126,6 +130,10 @@ char ** Maze::getSimpleMatrix(){
     return arr;
 }
 
+void Maze::addActive(ActiveUnit p) {
+    this -> activePieces.push_back(p);
+}
+
 void Maze::placePiece(int c_x, int c_y, int d_x, int d_y) { 
     Piece *currPiece = this -> board[c_x][c_y];
     Piece *destPiece = this -> board[d_x][d_y];
@@ -147,4 +155,58 @@ void Maze::placePiece(int c_x, int c_y, int d_x, int d_y) {
 
     board[c_x][c_y] = destPiece;
     board[d_x][d_y] = currPiece;
+}
+
+void Maze::setUp(){
+    int rowSize = this -> getRowCount();
+    int colSize = this -> getColCount();
+
+    Point activePiece[26];
+    Point destinPiece[26];
+
+    char** sMaze = this -> getSimpleMatrix();
+
+    for(int r = 0; r < rowSize; r++){
+        for(int c = 0; c < colSize; c++){
+            if ( isalpha(sMaze[r][c]) ) {
+                // Then the piece at the current position is an active unit
+                if( islower(sMaze[r][c]) ) {
+                    activePiece[((int) sMaze[r][c] - 97)] = Point(r,c);
+                }
+                if (isupper(sMaze[r][c])) {
+                    destinPiece[((int) (sMaze[r][c]) - 65)] = Point(r,c);
+                }
+            }   
+        }
+    }
+
+    for(int i = 0; i < 26; i ++) {
+        int activePieceX = activePiece[i].getX();
+        int activePieceY = activePiece[i].getY();
+
+        if(activePieceX == -1 && activePieceY == -1) {
+            continue;
+        }
+        ActiveUnit temp(activePiece[i].getX(), activePiece[i].getY(), sMaze[activePieceX][activePieceY]);
+        vector<Point> currPath = getbfsPath(Point(activePieceX, activePieceY), Point(destinPiece[i].getX(), destinPiece[i].getY()), *(this -> getBoard()), Point(-1, -1));
+        temp.createPath(currPath);
+        
+        // Alter Path now...
+        vector<Point> alterPath;
+        for(int i = 1; i < currPath.size() - 1; i++){
+            Point currPoint = currPath.at(i-1);
+            Point skipPoint = currPath.at(i);
+            Point nextPoint = currPath.at(i+1);
+
+            vector<Point> currAlterPath = getbfsPath(currPoint, nextPoint, *(this -> getBoard()), skipPoint);
+            for(int r = 0; r < currAlterPath.size(); r++) {
+                alterPath.push_back(currAlterPath.at(r));
+            }
+        }
+        // TODO: Utilize the Optimization talked in the paper
+        temp.createAlterPath(alterPath);
+
+        this -> addActive(temp);
+
+    }
 }

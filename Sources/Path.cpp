@@ -62,7 +62,7 @@ struct queueNode {
     int predY;
 }; 
 
-vector<Point> getbfsPath(Point src, Point dest, Maze maze){
+vector<Point> getbfsPath(Point src, Point dest, Maze maze, Point alterPath){
     vector<Point> path;
 
     char ** mat = maze.getSimpleMatrix();
@@ -73,7 +73,7 @@ vector<Point> getbfsPath(Point src, Point dest, Maze maze){
     if (!mat[src.getX()][src.getY()] || !mat[dest.getX()][dest.getY()]) {
         return vector<Point>(); 
     }
-  
+    
     queue<queueNode> queue; 
     vector<queueNode> predecessor;
 
@@ -86,7 +86,11 @@ vector<Point> getbfsPath(Point src, Point dest, Maze maze){
     bool visited[rowCount][colCount]; 
     memset(visited, false, sizeof visited); 
     visited[src.getX()][src.getY()] = true; 
+    if(alterPath.getX() != -1 && alterPath.getY() != -1){
+        visited[alterPath.getX()][alterPath.getY()] = true;
+    }
 
+    //TODO: SERIOUSLY OPTIMIZE THIS, IT HURTS TO LOOK AT
     while (!queue.empty()) { 
         queueNode curr = queue.front(); 
         queue.pop();
@@ -131,7 +135,6 @@ vector<Point> getbfsPath(Point src, Point dest, Maze maze){
         }
     }  
     
-    //TODO: SERIOUSLY OPTIMIZE THIS, IT HURTS TO LOOK AT
     int testX = -1;
     int testY = -1;
     reverse(predecessor.begin(), predecessor.end());
@@ -151,10 +154,6 @@ vector<Point> getbfsPath(Point src, Point dest, Maze maze){
         }
     }
     reverse(path.begin(), path.end());
-
-    for(int i = 0; i < path.size(); i++){
-        cout << "FINAL: " << path.at(i).getX() << ", " << path.at(i).getY() << endl; 
-    }
 
     return path;
 }
