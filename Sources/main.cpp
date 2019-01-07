@@ -42,18 +42,21 @@ bool testSlidable(Maze maze){
         cout << endl;
     }
     
-    // First, my rule. All units MUST have a path. 
+    // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
     for(int i = 0; i < maze.getActiveUnits().size(); i++){
         if(maze.getActiveUnits().at(i).getPath().size() == 0){
             return false;
         }
     }
-    // Second rule. Alternate Connectivity.
+
+    // Alternate Connectivity, First Rule.
     for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
-        if(maze.getActiveUnits().at(i).getPath().size() == maze.getActiveUnits().at(i).getAlterPath().size()){
+        if(maze.getActiveUnits().at(i).getAlterConnect == false) {
             return false;
         }
     }
+
+    // TODO: Target Isolation
 
     return true;
 }

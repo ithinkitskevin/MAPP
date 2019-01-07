@@ -190,6 +190,7 @@ void Maze::setUp(){
         ActiveUnit temp(activePiece[i].getX(), activePiece[i].getY(), sMaze[activePieceX][activePieceY]);
         vector<Point> currPath = getbfsPath(Point(activePieceX, activePieceY), Point(destinPiece[i].getX(), destinPiece[i].getY()), *(this -> getBoard()), Point(-1, -1));
         temp.createPath(currPath);
+        temp.setAlterConnect(true);
         
         // Alter Path now...
         vector<Point> alterPath;
@@ -199,6 +200,9 @@ void Maze::setUp(){
             Point nextPoint = currPath.at(i+1);
 
             vector<Point> currAlterPath = getbfsPath(currPoint, nextPoint, *(this -> getBoard()), skipPoint);
+            if(currAlterPath.size() == 0){
+                temp.setAlterConnect(false);
+            }
             for(int r = 0; r < currAlterPath.size(); r++) {
                 alterPath.push_back(currAlterPath.at(r));
             }
