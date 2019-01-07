@@ -15,7 +15,7 @@ const int COLCOUNT = 21;
 
 class Maze {
     private:
-        vector<ActiveUnit> activePieces;
+        vector<ActiveUnit*> activePieces;
         vector<Piece> solvedPieces;
         Piece *board[ROWCOUNT][COLCOUNT];
         Maze* maze;
@@ -24,7 +24,8 @@ class Maze {
     public:
         Maze();
         ~Maze();
-        vector<ActiveUnit> getActiveUnits(){ return activePieces; }
+        vector<ActiveUnit*> getActiveUnits(){ return activePieces; }
+        // ActiveUnit *getSpecificUnit (int x) {return this -> activePieces.at(x); }
         int getRowCount() { return ROWCOUNT; }
         int getColCount() { return COLCOUNT; }
         void toString();
@@ -33,6 +34,9 @@ class Maze {
         char ** getSimpleMatrix();
         void addActive(ActiveUnit) ;
         void setUp();
+        void sortActivePieces();
+        void doProgression();
+
 };
 
 #endif // MAZE_H

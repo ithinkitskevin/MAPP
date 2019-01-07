@@ -78,53 +78,39 @@ bool testSlidable(Maze maze){
             There needs to exist a path in general
         3. Target Isolation
     */      
-    maze.setUp();
-    for(int i = 0; i < maze.getActiveUnits().size(); i++){
-        printVector(maze.getActiveUnits().at(i).getPath());
-        cout << endl;
-        printVector(maze.getActiveUnits().at(i).getAlterPath());
-        cout << endl;
-        cout << endl;
-    }
+    // vector<ActiveUnit> activeUnit = maze.getActiveUnits();
+
+    // for(int i = 0; i < activeUnit.size(); i++){
+    //     printVector(maze.getActiveUnits().at(i).getPath());
+    //     cout << endl;
+    //     printVector(maze.getActiveUnits().at(i).getAlterPath());
+    //     cout << endl;
+    //     cout << endl;
+    // }
     
-    // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
-    for(int i = 0; i < maze.getActiveUnits().size(); i++){
-        if(maze.getActiveUnits().at(i).getPath().size() == 0){
-            return false;
-        }
-    }
+    // // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
+    // for(int i = 0; i < maze.getActiveUnits().size(); i++){
+    //     if(maze.getActiveUnits().at(i).getPath().size() == 0){
+    //         return false;
+    //     }
+    // }
 
-    // Alternate Connectivity, First Rule.
-    for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
-        if(maze.getActiveUnits().at(i).getAlterConnect() == false) {
-            return false;
-        }
-    }
-
+    // // Alternate Connectivity, First Rule.
+    // for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
+    //     if(maze.getActiveUnits().at(i).getAlterConnect() == false) {
+    //         return false;
+    //     }
+    // }
     // TODO: Target Isolation
 
     return true;
 }
 
-void doProgression(){
-    // Sort by Priority
-} 
 
-void doRegression() {
-    
-}
 
 int main(){
     Maze maze;
-    // maze.toString();
-    //    char** sMaze = maze.getSimpleMatrix();
 
-    // for(int i = 0; i < maze.getRowCount(); i++){
-    //     cout << "| ";
-    //     for (int j = 0; j < maze.getColCount(); j++){
-    //         cout << sMaze[i][j] << " " ;
-    //     } cout << "|" << endl;
-    // }
     maze.setUp();
 
     if (! testSlidable(maze)){
@@ -132,7 +118,24 @@ int main(){
         return 1;
     }
 
- 
+    // char** sMaze = maze.getSimpleMatrix();
+
+    // for(int i = 0; i < maze.getRowCount(); i++){
+    //     cout << "| ";
+    //     for (int j = 0; j < maze.getColCount(); j++){
+    //         cout << sMaze[i][j] << " " ;
+    //     } cout << "|" << endl;
+    // }
+
+    vector<ActiveUnit*> va = maze.getActiveUnits();
+      
+    maze.sortActivePieces();
+
+    for(int v = 0; v < va.size(); v++){
+        cout << "NEW:" <<  (char)va.at(v)->getValue() << " - "<< va.at(v)->getX() << ", " << va.at(v)->getY() << " with priority " << va.at(v)->getPriority() << endl;
+        // cout << va.at(v)->getX();
+    }
+
 
     return 0;
 }

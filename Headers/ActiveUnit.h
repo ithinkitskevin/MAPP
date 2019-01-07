@@ -12,6 +12,7 @@ class ActiveUnit : public Piece {
         vector<Point> path;
         vector<Point> alterPath;
         bool alterConnect;
+        Point dest;
     public:
         ActiveUnit( int x = -1, int y = -1, char value = 'X'):Piece(x, y, value) { }
         vector<Point> getPath() { return path; }
@@ -30,8 +31,12 @@ class ActiveUnit : public Piece {
         bool isEmpty() { if(path.size() == 0 ) {return false;} return true; }
         bool findPath(Point, Point);
         bool findAlterPath(Point, Point);
-        void setAlterConnect(bool r) { alterConnect = r; }
+        void setAlterConnect(bool r) { this->alterConnect = r; }
         bool getAlterConnect() { return alterConnect; }
+        void setPriority(int priority) { this -> priority = priority; }
+        int getPriority(){ return priority; }
+        void setDest(Point dest){ this -> dest = dest; }
+        Point getDest(){return dest;}
 };
 
 #endif // ActiveUnit_H

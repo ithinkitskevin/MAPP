@@ -1,6 +1,8 @@
 #include "../Headers/Maze.h"
 #include "../Headers/Piece.h"
 #include "../Headers/Path.h"
+#include "../Headers/Heuristic.h"
+
 
 #include <iostream>
 
@@ -370,6 +372,30 @@ Maze::~Maze() {
     // cout << "Removed Maze" << endl;
 }
 
+void Maze::sortActivePieces(){
+    vector<ActiveUnit*> r = this -> activePieces;
+    for(int a = 0; a < r.size(); a++){
+        // ActiveUnit &activePiece = this -> activePieces[a];
+        int d = straightLine(r.at(a)->getX(), r.at(a)->getY(), r.at(a)->getDest().getX(), r.at(a)->getDest().getY());
+        
+        r.at(a)->setPriority(d);
+        // cout << activePiece.getX() << ", " << activePiece.getY() << " with priority " <<  activePiece.getPriority() << endl;
+    }
+
+    sort(this -> activePieces.begin(), this -> activePieces.end());
+}
+
+void Maze::doProgression(){
+    // this -> sortActivePieces();
+    // for(int a = 0; a < this -> activePieces.size(); a++){
+    //     cout << activePieces.at(a).getPriority() << endl;
+    // }
+}
+
+void doRegression(){
+    
+}
+
 void Maze::toString() {
     int row = this -> getRowCount();
     int col = this -> getColCount();
@@ -399,7 +425,7 @@ char ** Maze::getSimpleMatrix(){
 }
 
 void Maze::addActive(ActiveUnit p) {
-    this -> activePieces.push_back(p);
+    // this -> activePieces -> push_back(p);
 }
 
 void Maze::placePiece(int c_x, int c_y, int d_x, int d_y) { 
@@ -416,14 +442,22 @@ void Maze::placePiece(int c_x, int c_y, int d_x, int d_y) {
         // This is if the active unit meets its desination
         currPiece -> setValue('0');
         destPiece -> setValue(' ');
-
-        // TODO: Finish the Active Pieces
-        // this -> activePieces() 
     }
 
     board[c_x][c_y] = destPiece;
     board[d_x][d_y] = currPiece;
 }
+
+
+void printVectors(vector<Point> p){
+    for(int i = 0; i < p.size() ; i++){
+        cout << p.at(i).getX() << ", " << p.at(i).getY();
+        if(i != p.size()-1) {
+            cout << " -> ";
+        }
+    } cout << endl;
+}
+
 
 void Maze::setUp(){
     int rowSize = this -> getRowCount();
@@ -449,22 +483,19 @@ void Maze::setUp(){
     }
 
     for(int i = 0; i < 26; i ++) {
-         cout << "FINISHED: STARTING PATH - " << i << endl;
         int activePieceX = activePiece[i].getX();
         int activePieceY = activePiece[i].getY();
 
         if(activePieceX == -1 && activePieceY == -1) {
             continue;
         }
+        Point destPoint = Point(destinPiece[i].getX(), destinPiece[i].getY());
+        // cout<< activePiece[i].getX() << " , " << activePiece[i].getY() << " and " << sMaze[activePieceX][activePieceY] << endl;
+        ActiveUnit * temp= new ActiveUnit(activePiece[i].getX(), activePiece[i].getY(), sMaze[activePieceX][activePieceY]);
 
-        ActiveUnit temp(activePiece[i].getX(), activePiece[i].getY(), sMaze[activePieceX][activePieceY]);
-        cout << "START ERROR AT BFS" << endl;
-        vector<Point> currPath = getbfsPath(Point(activePieceX, activePieceY), Point(destinPiece[i].getX(), destinPiece[i].getY()), this -> getSimpleMatrix(), rowSize, colSize, Point(-1, -1));
-        cout << "FINISHED ERROR AT BFS" << endl;
-        temp.createPath(currPath);
-        temp.setAlterConnect(true);
-
-       
+        vector<Point> currPath = getbfsPath(Point(activePieceX, activePieceY), destPoint, this -> getSimpleMatrix(), rowSize, colSize, Point(-1, -1));
+        temp->createPath(currPath);
+        temp->setAlterConnect(true);       
         
         // Alter Path now...
         vector<Point> alterPath;
@@ -475,16 +506,20 @@ void Maze::setUp(){
 
             vector<Point> currAlterPath = getbfsPath(currPoint, nextPoint, this -> getSimpleMatrix(), rowSize, colSize, skipPoint);
             if(currAlterPath.size() == 0){
-                temp.setAlterConnect(false);
+                temp->setAlterConnect(false);
             }
             for(int r = 0; r < currAlterPath.size(); r++) {
                 alterPath.push_back(currAlterPath.at(r));
             }
         }
         // TODO: Utilize the Optimization talked in the paper
-        temp.createAlterPath(alterPath);
+        temp->createAlterPath(alterPath);
+        temp->setDest(destPoint);
 
-        this -> addActive(temp);
+        // cout << temp->getX() << ", " << temp -> getY() << endl;
+        // printVectors(temp->getPath());
+
+        this -> activePieces.push_back(temp);
     }
        
 

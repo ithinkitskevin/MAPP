@@ -63,7 +63,6 @@ struct queueNode {
 }; 
 
 vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int colCount, Point alterPath){
-    cout << "Starting BFS Path "  << endl;
     vector<Point> path;
          
     char ** mat = maze;
@@ -83,7 +82,6 @@ vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int c
   
     const int rowNum[] = {-1, 0, 0, 1}; 
     const int colNum[] = {0, -1, 1, 0}; 
-    cout << "Ending " << endl;
 
     bool visited[rowCount][colCount]; 
     memset(visited, false, sizeof visited); 
