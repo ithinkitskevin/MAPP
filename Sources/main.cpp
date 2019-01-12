@@ -78,29 +78,31 @@ bool testSlidable(Maze maze){
             There needs to exist a path in general
         3. Target Isolation
     */      
-    // vector<ActiveUnit> activeUnit = maze.getActiveUnits();
+    vector<ActiveUnit*> activeUnit = maze.getActiveUnits();
 
-    // for(int i = 0; i < activeUnit.size(); i++){
-    //     printVector(maze.getActiveUnits().at(i).getPath());
-    //     cout << endl;
-    //     printVector(maze.getActiveUnits().at(i).getAlterPath());
-    //     cout << endl;
-    //     cout << endl;
-    // }
+    for(int i = 0; i < activeUnit.size(); i++){
+        printVector(maze.getActiveUnits().at(i) -> getPath());
+        cout << endl;
+        for(int r = 0; r < maze.getActiveUnits().at(i) -> getAlterPathLoc().size() - 1; r++ ) {
+            printVector(maze.getActiveUnits().at(i) -> getAlterPathAt(r));
+        }
+        cout << endl;
+        cout << endl;
+    }
     
-    // // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
-    // for(int i = 0; i < maze.getActiveUnits().size(); i++){
-    //     if(maze.getActiveUnits().at(i).getPath().size() == 0){
-    //         return false;
-    //     }
-    // }
+    // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
+    for(int i = 0; i < maze.getActiveUnits().size(); i++){
+        if(maze.getActiveUnits().at(i) -> getPath().size() == 0){
+            return false;
+        }
+    }
 
-    // // Alternate Connectivity, First Rule.
-    // for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
-    //     if(maze.getActiveUnits().at(i).getAlterConnect() == false) {
-    //         return false;
-    //     }
-    // }
+    // Alternate Connectivity, First Rule.
+    for(int i = 0; i < maze.getActiveUnits().size() - 1; i++){
+        if(maze.getActiveUnits().at(i) -> getAlterConnect() == false) {
+            return false;
+        }
+    }
     // TODO: Target Isolation
 
     return true;
@@ -128,14 +130,40 @@ int main(){
     // }
 
     vector<ActiveUnit*> va = maze.getActiveUnits();
-      
+
     maze.sortActivePieces();
 
     for(int v = 0; v < va.size(); v++){
         cout << "NEW:" <<  (char)va.at(v)->getValue() << " - "<< va.at(v)->getX() << ", " << va.at(v)->getY() << " with priority " << va.at(v)->getPriority() << endl;
-        // cout << va.at(v)->getX();
     }
 
+    maze.doProgression();
+    // char** sMaze = maze.getSimpleMatrix();
+
+    // for(int i = 0; i < maze.getRowCount(); i++){
+    //     cout << "| ";
+    //     for (int j = 0; j < maze.getColCount(); j++){
+    //         cout << sMaze[i][j] << " " ;
+    //     } cout << "|" << endl;
+    // }
+    int x = 0;
+    while(maze.stillActive() && x < 30){
+        maze.doProgression();
+        maze.doRegression();
+
+        cout << "IN MAIN: " << x << endl;
+        char** sMaze = maze.getSimpleMatrix();
+
+        for(int i = 0; i < maze.getRowCount(); i++){
+            cout << "| ";
+            for (int j = 0; j < maze.getColCount(); j++){
+                cout << sMaze[i][j] << " " ;
+                // cout << ((maze.getBoard()+i)+j) << " ";
+            } cout << "|" << endl;
+        }
+
+        x++;
+    }
 
     return 0;
 }

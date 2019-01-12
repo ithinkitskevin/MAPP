@@ -23,6 +23,7 @@ class Piece {
         void setX(int x) { this -> point -> setX(x); }
         void setY(int y) { this -> point -> setY(y); }
         void setValue(int value) { this -> value = value; }
+
 };
 
 #endif // PIECE_H

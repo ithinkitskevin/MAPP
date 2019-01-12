@@ -375,26 +375,169 @@ Maze::~Maze() {
 void Maze::sortActivePieces(){
     vector<ActiveUnit*> r = this -> activePieces;
     for(int a = 0; a < r.size(); a++){
-        // ActiveUnit &activePiece = this -> activePieces[a];
         int d = straightLine(r.at(a)->getX(), r.at(a)->getY(), r.at(a)->getDest().getX(), r.at(a)->getDest().getY());
         
         r.at(a)->setPriority(d);
-        // cout << activePiece.getX() << ", " << activePiece.getY() << " with priority " <<  activePiece.getPriority() << endl;
     }
+}
 
-    sort(this -> activePieces.begin(), this -> activePieces.end());
+bool compareUnitPointer(ActiveUnit* a, ActiveUnit* b) { return (*a < *b); }
+
+bool containsVectorPoint(vector<Point> points, Point point) {
+    for(int i = 0; i < points.size(); i++){
+        if(points.at(i).getX() == point.getX() &&
+            points.at(i).getY() == point.getY() ) {
+                return true;
+            }
+    }
+    return false;
+}
+
+bool isBringBlank(ActiveUnit* curr){
+
+    return false;
+}
+
+bool Maze::isPrivateZone(ActiveUnit* curr){
+    for(int r = 0; r < this -> activePieces.size(); r++){
+        if(this -> activePieces.at(r) -> getPriority() >  curr -> getPriority() ) {
+            // This actually means it has a higher priority, as
+            // low distance is high priority...
+            if(containsVectorPoint(this -> activePieces.at(r) -> getPrivateZone(), curr -> getNextMove() )) {
+                return true;
+            }
+        } else {
+            // That's it, no other priorities are better...
+            return false;
+        }
+    } 
+    return false;
 }
 
 void Maze::doProgression(){
-    // this -> sortActivePieces();
-    // for(int a = 0; a < this -> activePieces.size(); a++){
-    //     cout << activePieces.at(a).getPriority() << endl;
-    // }
-}
+    bool change = false;
 
-void doRegression(){
+    // sort(this -> activePieces.begin(), this -> activePieces.end(), compareUnitPointer);
+    // for (int a = 0; a < this -> activePieces.size(); a++) {
+    //     cout << "Test: " << this -> activePieces.at(a) -> getX() << ", " << this -> activePieces.at(a) -> getY() << " with priority "  << this -> activePieces.at(a) -> getPriority() << endl;
+    // }
+
+    // cout << "BEGIN PROGRESSION: " << this -> activePieces.size() << endl;
+    while(change == false) {
+        sort(this -> activePieces.begin(), this -> activePieces.end(), compareUnitPointer);
+        for (int a = 0; a < this -> activePieces.size(); a++) {
+            ActiveUnit * curr = this -> activePieces.at(a);
+            Point nxt = curr -> getNextMove();
+            cout << "In Progression Step:  (" << (char)curr -> getValue() << ") - " << curr -> getX() << ", " << curr -> getY() << " with next move - " <<  nxt.getX() << "," << nxt.getY() << "," << (char) this -> board[nxt.getX()][nxt.getY()] -> getValue() << endl;
+            Point currPosition = Point(curr -> getX(), curr -> getY());
+            if(!containsVectorPoint(curr -> getPath(), currPosition)){
+                // Current position is not in the path
+                    // Do Nothing
+                cout << "Current Position is NOT in the path - Do Nothing" << endl;
+                continue;
+            } else if (containsVectorPoint(curr -> getPointVisited(), curr -> getNextMove() )) {
+                // Already visisted the next move
+                cout << "Next step is already in Current progression step - Do Nothing" << endl;
+                continue;
+            } else if (isPrivateZone(curr)) {
+                // location in private zone
+                cout << "Private Zone - Do Nothing" << endl;
+                continue;
+            } else if (this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue() == SPACE || (isalpha((char)this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue()) && isupper((char)this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue()) )) {
+                cout << "Next Area is Blank " << endl;
+                // Add the position to pointVisited
+                curr -> addVisited(Point(curr -> getX(), curr -> getY()));
+
+                // move unit to next position
+                this -> placePiece(curr , curr -> getNextMove().getX(),curr -> getNextMove().getY());
+
+                // If the ActiveUnit is at it's destination
+                if(curr -> getX() == curr -> getDest().getX() && curr -> getY() == curr -> getDest().getY()) {
+                    // Get rid of the piece in activePieces
+                    int eraseIndex = -1;
+                    for(int i = 0; i < this -> activePieces.size(); i++) {
+                        if(this -> activePieces.at(i) -> getX() == curr -> getX()
+                            && this -> activePieces.at(i) -> getY() == curr -> getY()){
+                            eraseIndex = i;
+                        }
+                    }
+                    if(eraseIndex == -1) {
+                        cout << "ERROR: Move unit to empty position" << endl;
+                        return;
+                    } else {
+                        // this -> solvedPieces.push_back(activePieces.at(eraseIndex));
+                        this -> activePieces.erase(activePieces.begin() + eraseIndex);
+                    }
+                }
+
+                // Set the changes
+
+                // cout << "CURR" << curr -> toString() << endl;
+                // this -> activePieces.at(a) -> setX(curr -> getNextMove().getX());
+                // this -> activePieces.at(a) -> setY(curr -> getNextMove().getY());
+                // // this -> activePieces.at(a) = curr;
+                // cout << "activePiece" << this -> activePieces.at(a) -> toString() << endl;
+                change = true;
+            } else if(isBringBlank(curr)) {
+                // Bring blank to next position
+                cout << "Bring Blank " << endl;
+                // move unit to next position
+
+                // TODO: Modularize the three below points into a function
+                // 1- Add the position to pointVisited
+                curr -> addVisited(Point(curr -> getX(), curr -> getY()));
+
+                // 2- If the ActiveUnit is at it's destination
+                if(curr -> getX() == curr -> getDest().getX() && curr -> getY() == curr -> getDest().getY()) {
+                    cout << "DESTINATION: " << curr -> getX() << "," << curr -> getY() << " IS AT " << curr -> getDest().getX() << "," << curr -> getDest().getY() << endl;
+                    // Get rid of the piece in activePieces
+                    int eraseIndex = -1;
+                    for(int i = 0; i < this -> activePieces.size(); i++) {
+                        if(this -> activePieces.at(i) -> getX() == curr -> getX()
+                            && this -> activePieces.at(i) -> getY() == curr -> getY()){
+                            eraseIndex = i;
+                        }
+                    }
+                    if(eraseIndex == -1) {
+                        cout << "ERROR: Move unit to empty position" << endl;
+                        return;
+                    } else {
+                        // this -> solvedPieces.push_back(activePieces.at(eraseIndex));
+                        this -> activePieces.erase(activePieces.begin() + eraseIndex);
+                    }
+                }
+
+                // 3- move unit to next position
+                this -> placePiece(curr, curr -> getNextMove().getX(), curr -> getNextMove().getY());
+
+                // cout << "CURR" << curr -> toString() << endl;
+                // this -> activePieces.at(a) -> setX(curr -> getNextMove().getX());
+                // this -> activePieces.at(a) -> setY(curr -> getNextMove().getY());
+                // cout << "activePiece" << this -> activePieces.at(a) -> toString() << endl;
+                change = true;
+            } else {
+                // Do something else
+                                // cout << "Else - do nothign " << isalpha((char)this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue()) << endl;
+
+                cout << "Else - Do Nothing" << endl;
+                continue;
+                // break;
+            }
+        }
+        break;
+    }
+    cout << "Finished Progression Step" << endl;
     
 }
+
+void Maze::doRegression(){
+    // Reverse 
+    vector<ActiveUnit*> r = this -> activePieces;
+    for(int a = 0; a < r.size(); a++){
+        // int d = straightLine(r.at(a)->getX(), r.at(a)->getY(), r.at(a)->getDest().getX(), r.at(a)->getDest().getY());
+        cout << r.at(a) -> toString() << endl;
+    }
+}   
 
 void Maze::toString() {
     int row = this -> getRowCount();
@@ -413,10 +556,21 @@ char ** Maze::getSimpleMatrix(){
 
     char ** arr = new char*[row];
 
+    // This is to print out the Destination. 
+    // If another unit happens to land on another destination, then just put the active unit on top until it goes awway
+    // cout << "Current Active Pieces"
+    for(int a = 0; a < this -> activePieces.size(); a++) {
+        int activeX = activePieces.at(a) -> getDest().getX();
+        int activeY = activePieces.at(a) -> getDest().getY();
+        if(this -> board[activeX][activeY] -> getValue() == SPACE){
+            this -> board[activeX][activeY] -> setValue(toupper((char)activePieces.at(a) -> getValue()));
+        }
+    }
+
     for (int r = 0; r < row; r++) {
         arr[r] = new char[col];
         for (int c = 0; c < col; c++) {
-            // cout << (char) (this -> board[r][c] -> getValue()) << " ";
+            // cout << "(" << (char) (this -> board[r][c] -> getValue()) << "," << this -> board[r][c] -> getX() << "," << this -> board[r][c] -> getY() << ") ";
             arr[r][c] = (char) (this -> board[r][c] -> getValue());
         } 
     }
@@ -428,23 +582,28 @@ void Maze::addActive(ActiveUnit p) {
     // this -> activePieces -> push_back(p);
 }
 
-void Maze::placePiece(int c_x, int c_y, int d_x, int d_y) { 
-    Piece *currPiece = this -> board[c_x][c_y];
+void Maze::placePiece(ActiveUnit* curr, int d_x, int d_y) { 
+    // Piece *currPiece = this -> board[c_x][c_y];
     Piece *destPiece = this -> board[d_x][d_y];
+    int currX = curr -> getX();
+    int currY = curr -> getY();
 
-    currPiece -> setX(d_x);
-    currPiece -> setY(d_y);
-
-    destPiece -> setX(c_x);
-    destPiece -> setY(c_y);
-
-    if (tolower(destPiece -> getValue()) == (currPiece -> getValue()) ){
+    // cout << "placePiece: " << tolower(destPiece -> getValue()) << " and " << tolower(curr -> getValue()) << endl;
+    if (tolower(destPiece -> getValue()) == tolower(curr -> getValue()) ){
         // This is if the active unit meets its desination
-        currPiece -> setValue('0');
-        destPiece -> setValue(' ');
+        curr -> setValue('0');
+        // destPiece -> setValue(' ');
     }
 
-    board[c_x][c_y] = destPiece;
+    curr -> setX(d_x);
+    curr -> setY(d_y);
+
+    destPiece -> setX(currX);
+    destPiece -> setY(currY);
+    destPiece -> setValue(' ');
+
+    board[currX][currY] = destPiece;
+    Piece * currPiece = curr;
     board[d_x][d_y] = currPiece;
 }
 
@@ -508,6 +667,7 @@ void Maze::setUp(){
             if(currAlterPath.size() == 0){
                 temp->setAlterConnect(false);
             }
+            temp->addAlterPathLoc(alterPath.size());
             for(int r = 0; r < currAlterPath.size(); r++) {
                 alterPath.push_back(currAlterPath.at(r));
             }
@@ -515,6 +675,9 @@ void Maze::setUp(){
         // TODO: Utilize the Optimization talked in the paper
         temp->createAlterPath(alterPath);
         temp->setDest(destPoint);
+        if(currPath.size() > 1) {
+            temp->setNextMove(currPath.at(1));
+        }
 
         // cout << temp->getX() << ", " << temp -> getY() << endl;
         // printVectors(temp->getPath());
