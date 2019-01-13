@@ -7,8 +7,15 @@
 
 using namespace std;
 
-bool isValid(int row, int col, int rowCount, int colCount, char ** maze)  {  
-    return (row >= 0) && (row < rowCount) && (col >= 0) && (col < colCount) && maze[row][col] != '1'; 
+bool isValid(int row, int col, int rowCount, int colCount, char ** maze, char dest)  {  
+    // if(isalpha(maze[row][col])){
+    //     if(isupper(maze[row][col]) && maze[row][col] != dest) {
+    //         cout << "UPPER At coord " << row << ", " << col << " - " << maze[row][col] << endl;  
+    //         return false;
+    //     }
+    // }
+    return (row >= 0) && (row < rowCount) && (col >= 0) && (col < colCount) && maze[row][col] != '1';
+     
 } 
 
 bool getbfsPathUtil(char ** maze, int currX, int currY, Point dest, int xLimit, int yLimit, vector<Point> &path){
@@ -18,7 +25,7 @@ bool getbfsPathUtil(char ** maze, int currX, int currY, Point dest, int xLimit, 
         return true;
     }
 
-    if (isValid(currX, currY, xLimit, yLimit, maze)){
+    if (isValid(currX, currY, xLimit, yLimit, maze, maze[dest.getX()][dest.getY()])){
         maze[currX][currY] = '1';
         path.push_back(Point(currX, currY));
 
@@ -62,13 +69,18 @@ struct queueNode {
     int predY;
 }; 
 
+vector<Point> getAStarPath(){
+    vector<Point> path;
+
+
+
+    return path;
+}
+
 vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int colCount, Point alterPath){
     vector<Point> path;
          
     char ** mat = maze;
-
-    // int rowCount = maze.getRowCount();
-    // int colCount = maze.getColCount();
     
     if (!mat[src.getX()][src.getY()] || !mat[dest.getX()][dest.getY()]) {
         return vector<Point>(); 
@@ -90,6 +102,8 @@ vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int c
         visited[alterPath.getX()][alterPath.getY()] = true;
     }
 
+    char destChar = maze[dest.getX()][dest.getY()];
+
     //TODO: SERIOUSLY OPTIMIZE THIS, IT HURTS TO LOOK AT
     while (!queue.empty()) { 
         queueNode curr = queue.front(); 
@@ -101,35 +115,25 @@ vector<Point> getbfsPath(Point src, Point dest, char** maze, int rowCount, int c
 
         if (! (currX == dest.getX() && currY == dest.getY()) ) {  
             queueNode nextPosition = {currX + 1, currY, currX, currY};
-            if (isValid(currX+1, currY, rowCount, colCount, mat) && visited[currX+1][currY] == false){
+            if (isValid(currX+1, currY, rowCount, colCount, mat, destChar) && visited[currX+1][currY] == false){
                 queue.push(nextPosition);
                 visited[currX+1][currY] = true;
             }
             queueNode nextPosition2 = {currX , currY + 1, currX, currY};
-            if (isValid(currX, currY + 1, rowCount, colCount, mat) && visited[currX][currY+1] == false){
+            if (isValid(currX, currY + 1, rowCount, colCount, mat, destChar) && visited[currX][currY+1] == false){
                 queue.push(nextPosition2);
                 visited[currX][currY + 1] = true;
             }
             queueNode nextPosition3 = {currX - 1, currY, currX, currY};
-            if (isValid(currX-1, currY, rowCount, colCount, mat) && visited[currX-1][currY] == false){
+            if (isValid(currX-1, currY, rowCount, colCount, mat, destChar) && visited[currX-1][currY] == false){
                 queue.push(nextPosition3);
                 visited[currX-1][currY] = true;
             }
             queueNode nextPosition4 = {currX, currY-1, currX, currY};
-            if (isValid(currX, currY-1, rowCount, colCount, mat) && visited[currX][currY-1] == false){
+            if (isValid(currX, currY-1, rowCount, colCount, mat, destChar) && visited[currX][currY-1] == false){
                 queue.push(nextPosition4);
                 visited[currX][currY-1] = true;
             }
-            // for (int i = 0; i < 4; i++) { 
-            //     int row = currX + rowNum[i]; 
-            //     int col = currY + colNum[i]; 
-                
-            //     if (isValid(row, col, rowCount, colCount) ) { 
-            //         visited[row][col] = true; 
-            //         queueNode Adjcell = { row, col, curr.dist + 1 }; 
-            //         q.push(Adjcell); 
-            //     } 
-            // } 
         } else {
             break;
         }

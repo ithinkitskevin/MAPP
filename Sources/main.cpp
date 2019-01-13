@@ -40,20 +40,36 @@ void createMaze(){
 				{'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'}	// 16
 
     };
-
-
+    char fooMat2[rowCount][colCount] = {
+            {'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'}, //1
+			{'X','O',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //2
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //3
+			{'X','X','X','X','X','X','X','X','X','X','O','X','X','X','X','X','X','X','X','X','X'}, //4
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //5
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //6
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //7
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //8
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //9
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //10
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //11
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //12
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //13
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //14
+			{'X','W',' ','W',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'}, //15
+			{'X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'}  //16
+    };
 
     for(int r = 0; r < rowCount; r++) {
         for (int c = 0; c < colCount; c++){
                 string newC = " ";
 
-                if (fooMat[r][c] == ' ') {
+                if (fooMat2[r][c] == ' ') {
                     newC = "SPACE";
-                } else if (fooMat[r][c] ==  'X') {
+                } else if (fooMat2[r][c] ==  'X') {
                     newC = "WALL";
-                } else if (fooMat[r][c] == 'O') {
+                } else if (fooMat2[r][c] == 'O') {
                     newC = "\'A\'";
-                } else if (fooMat[r][c] == 'W') {
+                } else if (fooMat2[r][c] == 'W') {
                     newC = "\'a\'";
                 }
             cout << "this -> board[" << r << "][" << c << "] = new Piece(" << r << "," << c <<  "," << newC << ");" << endl;
@@ -83,9 +99,9 @@ bool testSlidable(Maze maze){
     for(int i = 0; i < activeUnit.size(); i++){
         printVector(maze.getActiveUnits().at(i) -> getPath());
         cout << endl;
-        for(int r = 0; r < maze.getActiveUnits().at(i) -> getAlterPathLoc().size() - 1; r++ ) {
-            printVector(maze.getActiveUnits().at(i) -> getAlterPathAt(r));
-        }
+        // for(int r = 0; r < maze.getActiveUnits().at(i) -> getAlterPathLoc().size() - 1; r++ ) {
+        //     printVector(maze.getActiveUnits().at(i) -> getAlterPathAt(r));
+        // }
         cout << endl;
         cout << endl;
     }
@@ -119,6 +135,16 @@ int main(){
         cout << "Current maze is NOT slidable." << endl;
         return 1;
     }
+    char** sMaze = maze.getSimpleMatrix();
+
+        for(int i = 0; i < maze.getRowCount(); i++){
+            cout << "| ";
+            for (int j = 0; j < maze.getColCount(); j++){
+                cout << sMaze[i][j] << " " ;
+                // cout << ((maze.getBoard()+i)+j) << " ";
+            } cout << "|" << endl;
+        }
+
 
     // char** sMaze = maze.getSimpleMatrix();
 
@@ -147,7 +173,8 @@ int main(){
     //     } cout << "|" << endl;
     // }
     int x = 0;
-    while(maze.stillActive() && x < 30){
+    while(maze.stillActive() && x < 60){
+        cout << "------------" << x << "------------" << endl;
         maze.doProgression();
         maze.doRegression();
 
@@ -161,7 +188,7 @@ int main(){
                 // cout << ((maze.getBoard()+i)+j) << " ";
             } cout << "|" << endl;
         }
-
+        cout << "------------" << "END"<< x << "------------" << endl;
         x++;
     }
 

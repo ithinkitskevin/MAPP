@@ -34,7 +34,6 @@ Maze::Maze() {
     this -> board[0][18] = new Piece(0,18,WALL);
     this -> board[0][19] = new Piece(0,19,WALL);
     this -> board[0][20] = new Piece(0,20,WALL);
-
     this -> board[1][0] = new Piece(1,0,WALL);
     this -> board[1][1] = new Piece(1,1,'A');
     this -> board[1][2] = new Piece(1,2,SPACE);
@@ -52,189 +51,178 @@ Maze::Maze() {
     this -> board[1][14] = new Piece(1,14,SPACE);
     this -> board[1][15] = new Piece(1,15,SPACE);
     this -> board[1][16] = new Piece(1,16,SPACE);
-    this -> board[1][17] = new Piece(1,17,'B');
+    this -> board[1][17] = new Piece(1,17,SPACE);
     this -> board[1][18] = new Piece(1,18,SPACE);
     this -> board[1][19] = new Piece(1,19,SPACE);
     this -> board[1][20] = new Piece(1,20,WALL);
-
-
     this -> board[2][0] = new Piece(2,0,WALL);
     this -> board[2][1] = new Piece(2,1,SPACE);
     this -> board[2][2] = new Piece(2,2,SPACE);
-    this -> board[2][3] = new Piece(2,3,WALL);
+    this -> board[2][3] = new Piece(2,3,SPACE);
     this -> board[2][4] = new Piece(2,4,SPACE);
     this -> board[2][5] = new Piece(2,5,SPACE);
-    this -> board[2][6] = new Piece(2,6,WALL);
+    this -> board[2][6] = new Piece(2,6,SPACE);
     this -> board[2][7] = new Piece(2,7,SPACE);
     this -> board[2][8] = new Piece(2,8,SPACE);
-    this -> board[2][9] = new Piece(2,9,WALL);
+    this -> board[2][9] = new Piece(2,9,SPACE);
     this -> board[2][10] = new Piece(2,10,SPACE);
     this -> board[2][11] = new Piece(2,11,SPACE);
-    this -> board[2][12] = new Piece(2,12,WALL);
+    this -> board[2][12] = new Piece(2,12,SPACE);
     this -> board[2][13] = new Piece(2,13,SPACE);
     this -> board[2][14] = new Piece(2,14,SPACE);
-    this -> board[2][15] = new Piece(2,15,WALL);
+    this -> board[2][15] = new Piece(2,15,SPACE);
     this -> board[2][16] = new Piece(2,16,SPACE);
     this -> board[2][17] = new Piece(2,17,SPACE);
-    this -> board[2][18] = new Piece(2,18,WALL);
+    this -> board[2][18] = new Piece(2,18,SPACE);
     this -> board[2][19] = new Piece(2,19,SPACE);
     this -> board[2][20] = new Piece(2,20,WALL);
-
     this -> board[3][0] = new Piece(3,0,WALL);
-    this -> board[3][1] = new Piece(3,1,SPACE);
-    this -> board[3][2] = new Piece(3,2,SPACE);
+    this -> board[3][1] = new Piece(3,1,WALL);
+    this -> board[3][2] = new Piece(3,2,WALL);
     this -> board[3][3] = new Piece(3,3,WALL);
-    this -> board[3][4] = new Piece(3,4,SPACE);
-    this -> board[3][5] = new Piece(3,5,SPACE);
+    this -> board[3][4] = new Piece(3,4,WALL);
+    this -> board[3][5] = new Piece(3,5,WALL);
     this -> board[3][6] = new Piece(3,6,WALL);
-    this -> board[3][7] = new Piece(3,7,SPACE);
-    this -> board[3][8] = new Piece(3,8,SPACE);
+    this -> board[3][7] = new Piece(3,7,WALL);
+    this -> board[3][8] = new Piece(3,8,WALL);
     this -> board[3][9] = new Piece(3,9,WALL);
-    this -> board[3][10] = new Piece(3,10,'C');
-    this -> board[3][11] = new Piece(3,11,'D');
+    this -> board[3][10] = new Piece(3,10,'B');
+    this -> board[3][11] = new Piece(3,11,SPACE);
     this -> board[3][12] = new Piece(3,12,WALL);
-    this -> board[3][13] = new Piece(3,13,SPACE);
-    this -> board[3][14] = new Piece(3,14,SPACE);
+    this -> board[3][13] = new Piece(3,13,WALL);
+    this -> board[3][14] = new Piece(3,14,WALL);
     this -> board[3][15] = new Piece(3,15,WALL);
-    this -> board[3][16] = new Piece(3,16,SPACE);
-    this -> board[3][17] = new Piece(3,17,SPACE);
+    this -> board[3][16] = new Piece(3,16,WALL);
+    this -> board[3][17] = new Piece(3,17,WALL);
     this -> board[3][18] = new Piece(3,18,WALL);
-    this -> board[3][19] = new Piece(3,19,SPACE);
+    this -> board[3][19] = new Piece(3,19,WALL);
     this -> board[3][20] = new Piece(3,20,WALL);
-
     this -> board[4][0] = new Piece(4,0,WALL);
     this -> board[4][1] = new Piece(4,1,SPACE);
     this -> board[4][2] = new Piece(4,2,SPACE);
-    this -> board[4][3] = new Piece(4,3,WALL);
+    this -> board[4][3] = new Piece(4,3,SPACE);
     this -> board[4][4] = new Piece(4,4,SPACE);
     this -> board[4][5] = new Piece(4,5,SPACE);
-    this -> board[4][6] = new Piece(4,6,WALL);
+    this -> board[4][6] = new Piece(4,6,SPACE);
     this -> board[4][7] = new Piece(4,7,SPACE);
     this -> board[4][8] = new Piece(4,8,SPACE);
-    this -> board[4][9] = new Piece(4,9,WALL);
-    this -> board[4][10] = new Piece(4,10,'E');
-    this -> board[4][11] = new Piece(4,11,'F');
-    this -> board[4][12] = new Piece(4,12,WALL);
+    this -> board[4][9] = new Piece(4,9,SPACE);
+    this -> board[4][10] = new Piece(4,10,SPACE);
+    this -> board[4][11] = new Piece(4,11,SPACE);
+    this -> board[4][12] = new Piece(4,12,SPACE);
     this -> board[4][13] = new Piece(4,13,SPACE);
     this -> board[4][14] = new Piece(4,14,SPACE);
-    this -> board[4][15] = new Piece(4,15,WALL);
+    this -> board[4][15] = new Piece(4,15,SPACE);
     this -> board[4][16] = new Piece(4,16,SPACE);
     this -> board[4][17] = new Piece(4,17,SPACE);
-    this -> board[4][18] = new Piece(4,18,WALL);
+    this -> board[4][18] = new Piece(4,18,SPACE);
     this -> board[4][19] = new Piece(4,19,SPACE);
     this -> board[4][20] = new Piece(4,20,WALL);
-
-
     this -> board[5][0] = new Piece(5,0,WALL);
     this -> board[5][1] = new Piece(5,1,SPACE);
     this -> board[5][2] = new Piece(5,2,SPACE);
-    this -> board[5][3] = new Piece(5,3,WALL);
+    this -> board[5][3] = new Piece(5,3,SPACE);
     this -> board[5][4] = new Piece(5,4,SPACE);
     this -> board[5][5] = new Piece(5,5,SPACE);
-    this -> board[5][6] = new Piece(5,6,WALL);
+    this -> board[5][6] = new Piece(5,6,SPACE);
     this -> board[5][7] = new Piece(5,7,SPACE);
     this -> board[5][8] = new Piece(5,8,SPACE);
-    this -> board[5][9] = new Piece(5,9,WALL);
+    this -> board[5][9] = new Piece(5,9,SPACE);
     this -> board[5][10] = new Piece(5,10,SPACE);
     this -> board[5][11] = new Piece(5,11,SPACE);
-    this -> board[5][12] = new Piece(5,12,WALL);
+    this -> board[5][12] = new Piece(5,12,SPACE);
     this -> board[5][13] = new Piece(5,13,SPACE);
-    this -> board[5][14] = new Piece(5,14,'G');
-    this -> board[5][15] = new Piece(5,15,WALL);
+    this -> board[5][14] = new Piece(5,14,SPACE);
+    this -> board[5][15] = new Piece(5,15,SPACE);
     this -> board[5][16] = new Piece(5,16,SPACE);
     this -> board[5][17] = new Piece(5,17,SPACE);
-    this -> board[5][18] = new Piece(5,18,WALL);
+    this -> board[5][18] = new Piece(5,18,SPACE);
     this -> board[5][19] = new Piece(5,19,SPACE);
     this -> board[5][20] = new Piece(5,20,WALL);
-
     this -> board[6][0] = new Piece(6,0,WALL);
     this -> board[6][1] = new Piece(6,1,SPACE);
     this -> board[6][2] = new Piece(6,2,SPACE);
-    this -> board[6][3] = new Piece(6,3,WALL);
+    this -> board[6][3] = new Piece(6,3,SPACE);
     this -> board[6][4] = new Piece(6,4,SPACE);
     this -> board[6][5] = new Piece(6,5,SPACE);
-    this -> board[6][6] = new Piece(6,6,WALL);
+    this -> board[6][6] = new Piece(6,6,SPACE);
     this -> board[6][7] = new Piece(6,7,SPACE);
     this -> board[6][8] = new Piece(6,8,SPACE);
-    this -> board[6][9] = new Piece(6,9,WALL);
+    this -> board[6][9] = new Piece(6,9,SPACE);
     this -> board[6][10] = new Piece(6,10,SPACE);
     this -> board[6][11] = new Piece(6,11,SPACE);
-    this -> board[6][12] = new Piece(6,12,WALL);
+    this -> board[6][12] = new Piece(6,12,SPACE);
     this -> board[6][13] = new Piece(6,13,SPACE);
     this -> board[6][14] = new Piece(6,14,SPACE);
-    this -> board[6][15] = new Piece(6,15,WALL);
+    this -> board[6][15] = new Piece(6,15,SPACE);
     this -> board[6][16] = new Piece(6,16,SPACE);
     this -> board[6][17] = new Piece(6,17,SPACE);
-    this -> board[6][18] = new Piece(6,18,WALL);
+    this -> board[6][18] = new Piece(6,18,SPACE);
     this -> board[6][19] = new Piece(6,19,SPACE);
     this -> board[6][20] = new Piece(6,20,WALL);
-
     this -> board[7][0] = new Piece(7,0,WALL);
     this -> board[7][1] = new Piece(7,1,SPACE);
     this -> board[7][2] = new Piece(7,2,SPACE);
-    this -> board[7][3] = new Piece(7,3,WALL);
+    this -> board[7][3] = new Piece(7,3,SPACE);
     this -> board[7][4] = new Piece(7,4,SPACE);
     this -> board[7][5] = new Piece(7,5,SPACE);
-    this -> board[7][6] = new Piece(7,6,WALL);
+    this -> board[7][6] = new Piece(7,6,SPACE);
     this -> board[7][7] = new Piece(7,7,SPACE);
     this -> board[7][8] = new Piece(7,8,SPACE);
-    this -> board[7][9] = new Piece(7,9,WALL);
+    this -> board[7][9] = new Piece(7,9,SPACE);
     this -> board[7][10] = new Piece(7,10,SPACE);
     this -> board[7][11] = new Piece(7,11,SPACE);
-    this -> board[7][12] = new Piece(7,12,WALL);
+    this -> board[7][12] = new Piece(7,12,SPACE);
     this -> board[7][13] = new Piece(7,13,SPACE);
     this -> board[7][14] = new Piece(7,14,SPACE);
-    this -> board[7][15] = new Piece(7,15,WALL);
+    this -> board[7][15] = new Piece(7,15,SPACE);
     this -> board[7][16] = new Piece(7,16,SPACE);
     this -> board[7][17] = new Piece(7,17,SPACE);
-    this -> board[7][18] = new Piece(7,18,WALL);
+    this -> board[7][18] = new Piece(7,18,SPACE);
     this -> board[7][19] = new Piece(7,19,SPACE);
     this -> board[7][20] = new Piece(7,20,WALL);
-
     this -> board[8][0] = new Piece(8,0,WALL);
-    this -> board[8][1] = new Piece(8,1,'H');
+    this -> board[8][1] = new Piece(8,1,SPACE);
     this -> board[8][2] = new Piece(8,2,SPACE);
-    this -> board[8][3] = new Piece(8,3,WALL);
+    this -> board[8][3] = new Piece(8,3,SPACE);
     this -> board[8][4] = new Piece(8,4,SPACE);
     this -> board[8][5] = new Piece(8,5,SPACE);
-    this -> board[8][6] = new Piece(8,6,WALL);
+    this -> board[8][6] = new Piece(8,6,SPACE);
     this -> board[8][7] = new Piece(8,7,SPACE);
     this -> board[8][8] = new Piece(8,8,SPACE);
-    this -> board[8][9] = new Piece(8,9,WALL);
+    this -> board[8][9] = new Piece(8,9,SPACE);
     this -> board[8][10] = new Piece(8,10,SPACE);
     this -> board[8][11] = new Piece(8,11,SPACE);
-    this -> board[8][12] = new Piece(8,12,WALL);
+    this -> board[8][12] = new Piece(8,12,SPACE);
     this -> board[8][13] = new Piece(8,13,SPACE);
     this -> board[8][14] = new Piece(8,14,SPACE);
-    this -> board[8][15] = new Piece(8,15,WALL);
+    this -> board[8][15] = new Piece(8,15,SPACE);
     this -> board[8][16] = new Piece(8,16,SPACE);
     this -> board[8][17] = new Piece(8,17,SPACE);
-    this -> board[8][18] = new Piece(8,18,WALL);
+    this -> board[8][18] = new Piece(8,18,SPACE);
     this -> board[8][19] = new Piece(8,19,SPACE);
     this -> board[8][20] = new Piece(8,20,WALL);
-
     this -> board[9][0] = new Piece(9,0,WALL);
     this -> board[9][1] = new Piece(9,1,SPACE);
     this -> board[9][2] = new Piece(9,2,SPACE);
-    this -> board[9][3] = new Piece(9,3,WALL);
+    this -> board[9][3] = new Piece(9,3,SPACE);
     this -> board[9][4] = new Piece(9,4,SPACE);
     this -> board[9][5] = new Piece(9,5,SPACE);
-    this -> board[9][6] = new Piece(9,6,WALL);
+    this -> board[9][6] = new Piece(9,6,SPACE);
     this -> board[9][7] = new Piece(9,7,SPACE);
     this -> board[9][8] = new Piece(9,8,SPACE);
-    this -> board[9][9] = new Piece(9,9,WALL);
+    this -> board[9][9] = new Piece(9,9,SPACE);
     this -> board[9][10] = new Piece(9,10,SPACE);
     this -> board[9][11] = new Piece(9,11,SPACE);
-    this -> board[9][12] = new Piece(9,12,WALL);
+    this -> board[9][12] = new Piece(9,12,SPACE);
     this -> board[9][13] = new Piece(9,13,SPACE);
     this -> board[9][14] = new Piece(9,14,SPACE);
-    this -> board[9][15] = new Piece(9,15,WALL);
+    this -> board[9][15] = new Piece(9,15,SPACE);
     this -> board[9][16] = new Piece(9,16,SPACE);
     this -> board[9][17] = new Piece(9,17,SPACE);
-    this -> board[9][18] = new Piece(9,18,WALL);
+    this -> board[9][18] = new Piece(9,18,SPACE);
     this -> board[9][19] = new Piece(9,19,SPACE);
     this -> board[9][20] = new Piece(9,20,WALL);
-
     this -> board[10][0] = new Piece(10,0,WALL);
     this -> board[10][1] = new Piece(10,1,SPACE);
     this -> board[10][2] = new Piece(10,2,SPACE);
@@ -256,7 +244,6 @@ Maze::Maze() {
     this -> board[10][18] = new Piece(10,18,SPACE);
     this -> board[10][19] = new Piece(10,19,SPACE);
     this -> board[10][20] = new Piece(10,20,WALL);
-
     this -> board[11][0] = new Piece(11,0,WALL);
     this -> board[11][1] = new Piece(11,1,SPACE);
     this -> board[11][2] = new Piece(11,2,SPACE);
@@ -278,7 +265,6 @@ Maze::Maze() {
     this -> board[11][18] = new Piece(11,18,SPACE);
     this -> board[11][19] = new Piece(11,19,SPACE);
     this -> board[11][20] = new Piece(11,20,WALL);
-
     this -> board[12][0] = new Piece(12,0,WALL);
     this -> board[12][1] = new Piece(12,1,SPACE);
     this -> board[12][2] = new Piece(12,2,SPACE);
@@ -300,7 +286,6 @@ Maze::Maze() {
     this -> board[12][18] = new Piece(12,18,SPACE);
     this -> board[12][19] = new Piece(12,19,SPACE);
     this -> board[12][20] = new Piece(12,20,WALL);
-
     this -> board[13][0] = new Piece(13,0,WALL);
     this -> board[13][1] = new Piece(13,1,SPACE);
     this -> board[13][2] = new Piece(13,2,SPACE);
@@ -322,29 +307,27 @@ Maze::Maze() {
     this -> board[13][18] = new Piece(13,18,SPACE);
     this -> board[13][19] = new Piece(13,19,SPACE);
     this -> board[13][20] = new Piece(13,20,WALL);
-
     this -> board[14][0] = new Piece(14,0,WALL);
     this -> board[14][1] = new Piece(14,1,'a');
-    this -> board[14][2] = new Piece(14,2,'b');
-    this -> board[14][3] = new Piece(14,3,'c');
-    this -> board[14][4] = new Piece(14,4,'d');
-    this -> board[14][5] = new Piece(14,5,'e');
-    this -> board[14][6] = new Piece(14,6,'f');
-    this -> board[14][7] = new Piece(14,7,'g');
-    this -> board[14][8] = new Piece(14,8,'h');
+    this -> board[14][2] = new Piece(14,2,SPACE);
+    this -> board[14][3] = new Piece(14,3,'b');
+    this -> board[14][4] = new Piece(14,4,SPACE);
+    this -> board[14][5] = new Piece(14,5,SPACE);
+    this -> board[14][6] = new Piece(14,6,SPACE);
+    this -> board[14][7] = new Piece(14,7,SPACE);
+    this -> board[14][8] = new Piece(14,8,SPACE);
     this -> board[14][9] = new Piece(14,9,SPACE);
     this -> board[14][10] = new Piece(14,10,SPACE);
     this -> board[14][11] = new Piece(14,11,SPACE);
-    this -> board[14][12] = new Piece(14,12, SPACE);
-    this -> board[14][13] = new Piece(14,13, SPACE);
-    this -> board[14][14] = new Piece(14,14, SPACE);
-    this -> board[14][15] = new Piece(14,15, SPACE);
-    this -> board[14][16] = new Piece(14,16, SPACE);
-    this -> board[14][17] = new Piece(14,17, SPACE);
-    this -> board[14][18] = new Piece(14,18,SPACE );
-    this -> board[14][19] = new Piece(14,19, SPACE);
+    this -> board[14][12] = new Piece(14,12,SPACE);
+    this -> board[14][13] = new Piece(14,13,SPACE);
+    this -> board[14][14] = new Piece(14,14,SPACE);
+    this -> board[14][15] = new Piece(14,15,SPACE);
+    this -> board[14][16] = new Piece(14,16,SPACE);
+    this -> board[14][17] = new Piece(14,17,SPACE);
+    this -> board[14][18] = new Piece(14,18,SPACE);
+    this -> board[14][19] = new Piece(14,19,SPACE);
     this -> board[14][20] = new Piece(14,20,WALL);
-
     this -> board[15][0] = new Piece(15,0,WALL);
     this -> board[15][1] = new Piece(15,1,WALL);
     this -> board[15][2] = new Piece(15,2,WALL);
@@ -366,10 +349,20 @@ Maze::Maze() {
     this -> board[15][18] = new Piece(15,18,WALL);
     this -> board[15][19] = new Piece(15,19,WALL);
     this -> board[15][20] = new Piece(15,20,WALL);
+
 }
 
 Maze::~Maze() {
     // cout << "Removed Maze" << endl;
+}
+
+void printVectors(vector<Point> p){
+    for(int i = 0; i < p.size() ; i++){
+        cout << p.at(i).getX() << ", " << p.at(i).getY();
+        if(i != p.size()-1) {
+            cout << " -> ";
+        }
+    } cout << endl;
 }
 
 void Maze::sortActivePieces(){
@@ -393,24 +386,80 @@ bool containsVectorPoint(vector<Point> points, Point point) {
     return false;
 }
 
-bool isBringBlank(ActiveUnit* curr){
-
-    return false;
-}
-
-bool Maze::isPrivateZone(ActiveUnit* curr){
+bool Maze::isPrivateZone(ActiveUnit* curr, Point nextMove){
+    cout << "isPrivateZone " << nextMove.getX() << ","  << nextMove.getY() << " - ";
+    sort(this -> activePieces.begin(), this -> activePieces.end(), compareUnitPointer);
     for(int r = 0; r < this -> activePieces.size(); r++){
-        if(this -> activePieces.at(r) -> getPriority() >  curr -> getPriority() ) {
-            // This actually means it has a higher priority, as
+        if(this -> activePieces.at(r) -> getPriority() > curr -> getPriority() ) {
+            // This actually means current has a higher priority, as
             // low distance is high priority...
-            if(containsVectorPoint(this -> activePieces.at(r) -> getPrivateZone(), curr -> getNextMove() )) {
+            if(containsVectorPoint(this -> activePieces.at(r) -> getPrivateZone(), nextMove )) {
+                printVectors(this -> activePieces.at(r) -> getPrivateZone());
+                cout << endl << "At isPrivateZone, " << this -> activePieces.at(r) -> getX() << "," << this -> activePieces.at(r) -> getY() << " causes private zone"; 
                 return true;
             }
         } else {
             // That's it, no other priorities are better...
+            cout << "at " << r << " done prioritizing..." << endl;
             return false;
         }
     } 
+
+    cout << endl;
+    return false;
+}
+
+void Maze::createBlank(ActiveUnit* curr,int alterX, int alterY, vector<Point> alterPath) {
+    cout << "createBlank at " << alterX << ", " << alterY << endl;
+    if(alterPath.size() == 0){
+        return;
+    }
+    printVectors(alterPath);
+    cout << "AHH?: " << curr -> getX() << ", " << curr -> getY() << endl;
+    int x = 0;
+    while(this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue() != SPACE) {
+        cout << "AHH!: "<< curr -> getNextMove().getX()<<", "<<curr -> getNextMove().getY()<<", "<<(char)this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue() << endl;
+        int indexMove = x;
+    
+        int fromX = alterPath.at(indexMove).getX();
+        int fromY = alterPath.at(indexMove).getY();
+        int toX = alterPath.at(indexMove+1).getX();
+        int toY = alterPath.at(indexMove+1).getY();
+
+        // move unit to next position
+
+        // TODO: Fix into a hashtable for faster result...
+        char from = board[fromX][fromY] -> getValue();
+        char to = board[toX][toY] -> getValue();
+
+        this -> board[fromX][fromY] -> setValue(to);
+        this -> board[toX][toY] -> setValue(from);
+
+        x++;
+
+    }
+}
+
+bool Maze::isBringBlank(ActiveUnit* curr){
+    // cout <<"START" ;
+    vector<Point> alterPath = curr -> getAlterPathAt(curr -> getX(), curr -> getY());
+    
+    printVectors(alterPath);
+    if(alterPath.size() == 0) {
+        return false;
+    }
+    for(int i = 0; i < alterPath.size(); i++) {
+        cout << "AT "<< i << " "; 
+        if(isPrivateZone(curr, alterPath.at(i))) {
+            return false;
+        } else {
+            if(this -> board[alterPath.at(i).getX()][alterPath.at(i).getY()] -> getValue() == SPACE) {
+                createBlank(curr, alterPath.at(i).getX(), alterPath.at(i).getY(), alterPath);
+                return true;
+            }
+        }
+    }
+
     return false;
 }
 
@@ -439,7 +488,7 @@ void Maze::doProgression(){
                 // Already visisted the next move
                 cout << "Next step is already in Current progression step - Do Nothing" << endl;
                 continue;
-            } else if (isPrivateZone(curr)) {
+            } else if (isPrivateZone(curr, curr -> getNextMove())) {
                 // location in private zone
                 cout << "Private Zone - Do Nothing" << endl;
                 continue;
@@ -470,26 +519,20 @@ void Maze::doProgression(){
                     }
                 }
 
-                // Set the changes
-
-                // cout << "CURR" << curr -> toString() << endl;
-                // this -> activePieces.at(a) -> setX(curr -> getNextMove().getX());
-                // this -> activePieces.at(a) -> setY(curr -> getNextMove().getY());
-                // // this -> activePieces.at(a) = curr;
-                // cout << "activePiece" << this -> activePieces.at(a) -> toString() << endl;
                 change = true;
             } else if(isBringBlank(curr)) {
                 // Bring blank to next position
                 cout << "Bring Blank " << endl;
-                // move unit to next position
 
                 // TODO: Modularize the three below points into a function
-                // 1- Add the position to pointVisited
+                // Add the position to pointVisited
                 curr -> addVisited(Point(curr -> getX(), curr -> getY()));
 
-                // 2- If the ActiveUnit is at it's destination
+                // move unit to next position
+                // this -> placePiece(curr , curr -> getNextMove().getX(),curr -> getNextMove().getY());
+
+                // If the ActiveUnit is at it's destination
                 if(curr -> getX() == curr -> getDest().getX() && curr -> getY() == curr -> getDest().getY()) {
-                    cout << "DESTINATION: " << curr -> getX() << "," << curr -> getY() << " IS AT " << curr -> getDest().getX() << "," << curr -> getDest().getY() << endl;
                     // Get rid of the piece in activePieces
                     int eraseIndex = -1;
                     for(int i = 0; i < this -> activePieces.size(); i++) {
@@ -507,21 +550,11 @@ void Maze::doProgression(){
                     }
                 }
 
-                // 3- move unit to next position
-                this -> placePiece(curr, curr -> getNextMove().getX(), curr -> getNextMove().getY());
-
-                // cout << "CURR" << curr -> toString() << endl;
-                // this -> activePieces.at(a) -> setX(curr -> getNextMove().getX());
-                // this -> activePieces.at(a) -> setY(curr -> getNextMove().getY());
-                // cout << "activePiece" << this -> activePieces.at(a) -> toString() << endl;
                 change = true;
             } else {
                 // Do something else
-                                // cout << "Else - do nothign " << isalpha((char)this -> board[curr -> getNextMove().getX()][curr -> getNextMove().getY()] -> getValue()) << endl;
-
                 cout << "Else - Do Nothing" << endl;
                 continue;
-                // break;
             }
         }
         break;
@@ -582,6 +615,23 @@ void Maze::addActive(ActiveUnit p) {
     // this -> activePieces -> push_back(p);
 }
 
+void Maze::placePiece(int s_x, int s_y, int d_x, int d_y) { 
+    // cout << "BEFORE-curr:" << currPiece -> getX() << ","<< currPiece -> getY() << ","<< (char)currPiece -> getValue() << "," << endl;
+    // cout << "BEFORE-dest:" << destPiece -> getX() << ","<< destPiece -> getY() << ","<< (char)destPiece -> getValue() << "," << endl;
+
+    Piece * currPiece = this -> board[s_x][s_y];
+    Piece * destPiece = this -> board[d_x][d_y];
+
+    currPiece -> setX(d_x);
+    currPiece -> setY(d_y);
+
+    destPiece -> setX(s_x);
+    destPiece -> setY(s_y);
+
+    cout << "AFTER-curr:" << board[s_x][s_y] -> getX() << ","<< board[s_x][s_y] -> getY() << ","<< (char)board[s_x][s_y] -> getValue() << "," << endl;
+    cout << "AFTER-dest:" << this -> board[d_x][d_y] -> getX() << ","<< this -> board[d_x][d_y] -> getY() << ","<< (char)this -> board[d_x][d_y] -> getValue() << "," << endl;
+}
+
 void Maze::placePiece(ActiveUnit* curr, int d_x, int d_y) { 
     // Piece *currPiece = this -> board[c_x][c_y];
     Piece *destPiece = this -> board[d_x][d_y];
@@ -605,16 +655,6 @@ void Maze::placePiece(ActiveUnit* curr, int d_x, int d_y) {
     board[currX][currY] = destPiece;
     Piece * currPiece = curr;
     board[d_x][d_y] = currPiece;
-}
-
-
-void printVectors(vector<Point> p){
-    for(int i = 0; i < p.size() ; i++){
-        cout << p.at(i).getX() << ", " << p.at(i).getY();
-        if(i != p.size()-1) {
-            cout << " -> ";
-        }
-    } cout << endl;
 }
 
 

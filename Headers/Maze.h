@@ -21,7 +21,9 @@ class Maze {
         Maze* maze;
     protected:
     public:
-        bool isPrivateZone(ActiveUnit*);
+        bool isPrivateZone(ActiveUnit*, Point);
+        bool isBringBlank(ActiveUnit*);
+        void createBlank(ActiveUnit*,int, int, vector<Point>);
         Maze();
         ~Maze();
         vector<ActiveUnit*> getActiveUnits(){ return activePieces; }
@@ -29,6 +31,7 @@ class Maze {
         int getColCount() { return COLCOUNT; }
         void toString();
         void placePiece(ActiveUnit*, int, int);
+        void placePiece(int, int, int, int);
         Maze *getBoard() { if (! (this -> maze)) { maze = new Maze(); } return maze; }
         char ** getSimpleMatrix();
         void addActive(ActiveUnit) ;

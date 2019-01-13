@@ -46,18 +46,26 @@ class ActiveUnit : public Piece {
         void addAlterPathLoc(int x){
             this -> alterPathLoc.push_back(x);
         }
-        vector<Point> getAlterPathAt(int r) {
+        vector<Point> getAlterPathAt(int currX, int currY) {
             vector<Point> cc;
-            // for(int r = 0; r < this -> getAlterPathLoc().size() - 1; r++ ) {
-                int start = this -> getAlterPathLoc().at(r);
-                int end = this -> getAlterPathLoc().at(r+1);
-                // cout << start << " AND  " << end << endl;
-
-                for(int x = start; x < end; x++) {
-                    cc.push_back(this -> getAlterPath().at(x));
+            int r = 0;
+            for(int x = 0; x < this -> path.size(); x++) {
+                if(this -> path.at(x).getX() == currX && this -> path.at(x).getY() == currY) {
+                    r = x - 1;
+                    break;
                 }
-                // cout << "For coord " << r << ", the alter path is " ; 
-            // }
+            }
+            if(r < 0) {
+                return cc;
+            }
+
+            int start = this -> getAlterPathLoc().at(r);
+            int end = this -> getAlterPathLoc().at(r+1);
+
+            for(int x = start; x < end; x++) {
+                cc.push_back(this -> getAlterPath().at(x));
+            }
+
             return cc;
         }
         bool operator< (const ActiveUnit &other) const { return this->priority < other.priority; }
