@@ -46,12 +46,17 @@ class ActiveUnit : public Piece {
         void addAlterPathLoc(int x){
             this -> alterPathLoc.push_back(x);
         }
-        vector<Point> getAlterPathAt(int currX, int currY) {
+        vector<Point> getAlterPathAt(int currX, int currY, bool behind) {
             vector<Point> cc;
             int r = 0;
             for(int x = 0; x < this -> path.size(); x++) {
                 if(this -> path.at(x).getX() == currX && this -> path.at(x).getY() == currY) {
-                    r = x - 1;
+                    if(behind) {
+                        r = x - 1;
+                    } else {
+                        r = x;
+                    }
+                    
                     break;
                 }
             }

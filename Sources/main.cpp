@@ -173,7 +173,7 @@ int main(){
     //     } cout << "|" << endl;
     // }
     int x = 0;
-    while(maze.stillActive() && x < 60){
+    while(maze.stillActive() && x < 20){
         cout << "------------" << x << "------------" << endl;
         maze.doProgression();
         maze.doRegression();

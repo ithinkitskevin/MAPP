@@ -40,6 +40,7 @@ class Maze {
         void doProgression();
         void doRegression();
         bool stillActive(){ if(activePieces.size() != 0){ return true; } return false; };
+        bool isAlterPathAvail(vector<Point> , char** );
 };
 
 #endif // MAZE_H

@@ -349,7 +349,6 @@ Maze::Maze() {
     this -> board[15][18] = new Piece(15,18,WALL);
     this -> board[15][19] = new Piece(15,19,WALL);
     this -> board[15][20] = new Piece(15,20,WALL);
-
 }
 
 Maze::~Maze() {
@@ -440,9 +439,29 @@ void Maze::createBlank(ActiveUnit* curr,int alterX, int alterY, vector<Point> al
     }
 }
 
+bool isMovable(int x, int y, char**maze){
+    char c = maze[x][y];
+    if(isalpha(c)){
+        if(islower(c)){
+            return true;
+        }
+        if(isupper(c)) {
+            return false;
+        }
+    }
+    if(c == '0'){
+        // Not needed... 
+        return false;
+    }
+    return false;
+}
+
 bool Maze::isBringBlank(ActiveUnit* curr){
     // cout <<"START" ;
-    vector<Point> alterPath = curr -> getAlterPathAt(curr -> getX(), curr -> getY());
+    if(isMovable(curr -> getX(), curr -> getY(), this -> getSimpleMatrix())){
+        return false;
+    }
+    vector<Point> alterPath = curr -> getAlterPathAt(curr -> getX(), curr -> getY(), true);
     
     printVectors(alterPath);
     if(alterPath.size() == 0) {
@@ -463,13 +482,22 @@ bool Maze::isBringBlank(ActiveUnit* curr){
     return false;
 }
 
+bool Maze::isAlterPathAvail(vector<Point> alterPath, char** maze){
+    int alterPathSize = alterPath.size();
+    if(alterPathSize <= 1) {
+        return false;
+    }
+    for(int a = 1; a < alterPathSize; a++){
+        if(maze[alterPath.at(a).getX()][alterPath.at(a).getY()] != SPACE) {
+            // cout << "I'M NOT SPACE!! " << maze[alterPath.at(a).getX()][alterPath.at(a).getY()] << endl;
+            return false;
+        }
+    }
+    return true;
+}
+
 void Maze::doProgression(){
     bool change = false;
-
-    // sort(this -> activePieces.begin(), this -> activePieces.end(), compareUnitPointer);
-    // for (int a = 0; a < this -> activePieces.size(); a++) {
-    //     cout << "Test: " << this -> activePieces.at(a) -> getX() << ", " << this -> activePieces.at(a) -> getY() << " with priority "  << this -> activePieces.at(a) -> getPriority() << endl;
-    // }
 
     // cout << "BEGIN PROGRESSION: " << this -> activePieces.size() << endl;
     while(change == false) {
@@ -483,6 +511,8 @@ void Maze::doProgression(){
                 // Current position is not in the path
                     // Do Nothing
                 cout << "Current Position is NOT in the path - Do Nothing" << endl;
+                // If position is not in the path, then see if it's somewhere else and bring it back home
+                // for(curr -> getPath
                 continue;
             } else if (containsVectorPoint(curr -> getPointVisited(), curr -> getNextMove() )) {
                 // Already visisted the next move
@@ -529,7 +559,7 @@ void Maze::doProgression(){
                 curr -> addVisited(Point(curr -> getX(), curr -> getY()));
 
                 // move unit to next position
-                // this -> placePiece(curr , curr -> getNextMove().getX(),curr -> getNextMove().getY());
+                this -> placePiece(curr , curr -> getNextMove().getX(),curr -> getNextMove().getY());
 
                 // If the ActiveUnit is at it's destination
                 if(curr -> getX() == curr -> getDest().getX() && curr -> getY() == curr -> getDest().getY()) {
@@ -551,9 +581,20 @@ void Maze::doProgression(){
                 }
 
                 change = true;
+            } else if (isAlterPathAvail(curr -> getAlterPathAt(curr -> getX(), curr -> getY(), false), this -> getSimpleMatrix())) {
+                cout << "Alternate Path" << endl;
+                // For alternate path...
+                // So if there's nothing along the alternatePath, then move the active unit along the alternatePath...
+                vector<Point> alterPath = curr -> getAlterPathAt(curr -> getX(), curr -> getY(), false);
+                placePiece(curr, alterPath.at(alterPath.size()-1).getX(), alterPath.at(alterPath.size()-1).getY());
+                
+                cout << "Curr Point" << curr -> getX() << ", " << curr -> getY() << endl;
+                change = true;
             } else {
                 // Do something else
                 cout << "Else - Do Nothing" << endl;
+                vector<Point> alterPath = curr -> getAlterPathAt(curr -> getX(), curr -> getY(), false);
+                printVectors(alterPath);
                 continue;
             }
         }
@@ -616,8 +657,8 @@ void Maze::addActive(ActiveUnit p) {
 }
 
 void Maze::placePiece(int s_x, int s_y, int d_x, int d_y) { 
-    // cout << "BEFORE-curr:" << currPiece -> getX() << ","<< currPiece -> getY() << ","<< (char)currPiece -> getValue() << "," << endl;
-    // cout << "BEFORE-dest:" << destPiece -> getX() << ","<< destPiece -> getY() << ","<< (char)destPiece -> getValue() << "," << endl;
+    cout << "BEFORE-curr:" << this -> board[s_x][s_y] -> getX() << ","<< this -> board[s_x][s_y] -> getY() << ","<< (char)this -> board[s_x][s_y] -> getValue() << "," << endl;
+    cout << "BEFORE-dest:" << this -> board[d_x][d_y] -> getX() << ","<< this -> board[d_x][d_y] -> getY() << ","<< (char)this -> board[d_x][d_y] -> getValue() << "," << endl;
 
     Piece * currPiece = this -> board[s_x][s_y];
     Piece * destPiece = this -> board[d_x][d_y];
@@ -628,7 +669,7 @@ void Maze::placePiece(int s_x, int s_y, int d_x, int d_y) {
     destPiece -> setX(s_x);
     destPiece -> setY(s_y);
 
-    cout << "AFTER-curr:" << board[s_x][s_y] -> getX() << ","<< board[s_x][s_y] -> getY() << ","<< (char)board[s_x][s_y] -> getValue() << "," << endl;
+    cout << "AFTER-curr:" << this -> board[s_x][s_y] -> getX() << ","<< this -> board[s_x][s_y] -> getY() << ","<< (char)this -> board[s_x][s_y] -> getValue() << "," << endl;
     cout << "AFTER-dest:" << this -> board[d_x][d_y] -> getX() << ","<< this -> board[d_x][d_y] -> getY() << ","<< (char)this -> board[d_x][d_y] -> getValue() << "," << endl;
 }
 
