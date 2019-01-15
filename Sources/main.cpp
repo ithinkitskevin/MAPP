@@ -146,37 +146,15 @@ int main(){
         }
 
 
-    // char** sMaze = maze.getSimpleMatrix();
-
-    // for(int i = 0; i < maze.getRowCount(); i++){
-    //     cout << "| ";
-    //     for (int j = 0; j < maze.getColCount(); j++){
-    //         cout << sMaze[i][j] << " " ;
-    //     } cout << "|" << endl;
-    // }
-
     vector<ActiveUnit*> va = maze.getActiveUnits();
 
     maze.sortActivePieces();
 
-    for(int v = 0; v < va.size(); v++){
-        cout << "NEW:" <<  (char)va.at(v)->getValue() << " - "<< va.at(v)->getX() << ", " << va.at(v)->getY() << " with priority " << va.at(v)->getPriority() << endl;
-    }
-
-    maze.doProgression();
-    // char** sMaze = maze.getSimpleMatrix();
-
-    // for(int i = 0; i < maze.getRowCount(); i++){
-    //     cout << "| ";
-    //     for (int j = 0; j < maze.getColCount(); j++){
-    //         cout << sMaze[i][j] << " " ;
-    //     } cout << "|" << endl;
-    // }
     int x = 0;
-    while(maze.stillActive() && x < 20){
+    while(maze.stillActive() && x < 8){
         cout << "------------" << x << "------------" << endl;
         maze.doProgression();
-        maze.doRegression();
+        // maze.doRegression();
 
         cout << "IN MAIN: " << x << endl;
         char** sMaze = maze.getSimpleMatrix();

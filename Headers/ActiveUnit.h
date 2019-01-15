@@ -13,10 +13,24 @@ class ActiveUnit : public Piece {
         vector<Point> alterPath;
         vector<int> alterPathLoc;
         Point nextMove;
+        Point original;
+        vector<Point> movedPath;
         bool alterConnect;
         Point dest;
         vector<Point> pointVisisted;
     public:
+        vector<Point> getMovedPath(){
+            return this -> movedPath;
+        }
+        void setMovedPath(Point p){
+            this -> movedPath.push_back(p);
+        }
+        void eraseMovedPath(int begin, int end) {
+            // for(int r = begin; r < end; r++){
+            //     this -> movedPath.erase(r);
+            // }
+            this -> movedPath.erase(movedPath.end()-begin, movedPath.end()-end);
+        } 
         void addVisited(Point v) { pointVisisted.push_back(v); } 
         vector<Point> getPointVisited() { return pointVisisted; }
         ActiveUnit( int x = -1, int y = -1, char value = 'X'):Piece(x, y, value) { }
@@ -32,6 +46,12 @@ class ActiveUnit : public Piece {
                this -> alterPath.push_back(vect1[i]); 
             }
         }
+        Point getOriginal(){
+            return this -> original;
+        }
+        void setOriginal(Point x){
+            this -> original = x;
+        }
         void setNextMove(Point n) { this -> nextMove = n; }
         Point getNextMove() { 
             for(int i = 0; i < this -> path.size() - 1; i++) {
@@ -40,6 +60,16 @@ class ActiveUnit : public Piece {
                     return Point(this -> path.at(i+1).getX(), this -> path.at(i+1).getY());
                 }
             }
+            // So it's not in it's usual track... Then look for it via original
+            if(this -> original.getX() != -1 && this -> original.getY() != -1) {
+                for(int i = 0; i < this -> path.size() - 1; i++) {
+                    if(this -> path.at(i).getX() == this -> original.getX() && 
+                        this -> path.at(i).getY() == this -> original.getY() ) {
+                        return Point(this -> path.at(i+1).getX(), this -> path.at(i+1).getY());
+                    }
+                }
+            }
+
             return Point(-1, -1);
          }
         vector<int> getAlterPathLoc() { return alterPathLoc; }
