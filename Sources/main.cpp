@@ -96,15 +96,15 @@ bool testSlidable(Maze maze){
     */      
     vector<ActiveUnit*> activeUnit = maze.getActiveUnits();
 
-    for(int i = 0; i < activeUnit.size(); i++){
-        printVector(maze.getActiveUnits().at(i) -> getPath());
-        cout << endl;
-        // for(int r = 0; r < maze.getActiveUnits().at(i) -> getAlterPathLoc().size() - 1; r++ ) {
-        //     printVector(maze.getActiveUnits().at(i) -> getAlterPathAt(r));
-        // }
-        cout << endl;
-        cout << endl;
-    }
+    // for(int i = 0; i < activeUnit.size(); i++){
+    //     printVector(maze.getActiveUnits().at(i) -> getPath());
+    //     cout << endl;
+    //     // for(int r = 0; r < maze.getActiveUnits().at(i) -> getAlterPathLoc().size() - 1; r++ ) {
+    //     //     printVector(maze.getActiveUnits().at(i) -> getAlterPathAt(r));
+    //     // }
+    //     cout << endl;
+    //     cout << endl;
+    // }
     
     // My rule: All units MUST have a path. This also means Initial Blank (2nd rule).
     for(int i = 0; i < maze.getActiveUnits().size(); i++){
@@ -125,11 +125,22 @@ bool testSlidable(Maze maze){
 }
 
 
+void printMaze(int rE, int cE, vector<Point> ve, char ** smaze){
+    for(int v = 0; v < ve.size(); v++){
+        smaze[ve.at(v).getX()][ve.at(v).getY()] = '*';
+    }
+    for(int r = 0; r < rE; r++) {
+        for (int c = 0; c < cE; c++){
+            cout << smaze[r][c] ;
+        } cout <<endl;
+    }
+}
 
 int main(){
     Maze maze;
 
     maze.setUp();
+    
 
     if (! testSlidable(maze)){
         cout << "Current maze is NOT slidable." << endl;
@@ -145,20 +156,13 @@ int main(){
             } cout << "|" << endl;
         }
 
-
-    vector<ActiveUnit*> va = maze.getActiveUnits();
-
-    maze.sortActivePieces();
-
     int x = 0;
-    while(maze.stillActive() && x < 8){
+    while(maze.stillActive() && x < 50){
         cout << "------------" << x << "------------" << endl;
+        maze.getPriority();
         maze.doProgression();
-        // maze.doRegression();
 
-        cout << "IN MAIN: " << x << endl;
         char** sMaze = maze.getSimpleMatrix();
-
         for(int i = 0; i < maze.getRowCount(); i++){
             cout << "| ";
             for (int j = 0; j < maze.getColCount(); j++){
@@ -166,9 +170,22 @@ int main(){
                 // cout << ((maze.getBoard()+i)+j) << " ";
             } cout << "|" << endl;
         }
+        vector<ActiveUnit*> va = maze.getActiveUnits();
+    
+        for(int v = 0;v < va.size(); v++) {
+            cout << "LOOK HERE:" << va.at(v) -> getX() << "," << va.at(v) -> getY() << endl;
+            printVector(va.at(v)->getPointVisited());
+        } cout << endl;
+
+        if(maze.getChange() == false){
+            cout << "CHANGED OMG" << endl;
+            maze.doRepositioning();
+        }
+        
         cout << "------------" << "END"<< x << "------------" << endl;
         x++;
     }
+    
 
     return 0;
 }
