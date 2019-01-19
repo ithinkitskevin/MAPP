@@ -5,7 +5,9 @@
 #include "../Headers/Point.h"
 
 #include <vector>
+#include <iostream>
 
+using namespace std;
 class ActiveUnit : public Piece {
     private:
         int priority;
@@ -13,6 +15,7 @@ class ActiveUnit : public Piece {
         vector<Point> alterPath;
         vector<int> alterPathLoc;
         Point nextMove;
+        Point initPosition;
         Point original;
         vector<Point> movedPath;
         bool alterConnect;
@@ -25,10 +28,13 @@ class ActiveUnit : public Piece {
         void setMovedPath(Point p){
             this -> movedPath.push_back(p);
         }
+        void setInitialPosition(Point p){
+            this -> initPosition = p;
+        }
+        Point getInitialPosition(Point p) {
+            return this->initPosition;
+        }
         void eraseMovedPath(int begin, int end) {
-            // for(int r = begin; r < end; r++){
-            //     this -> movedPath.erase(r);
-            // }
             this -> movedPath.erase(movedPath.end()-begin, movedPath.end()-end);
         } 
         void addVisited(Point v) { pointVisisted.push_back(v); } 
@@ -77,6 +83,7 @@ class ActiveUnit : public Piece {
             this -> alterPathLoc.push_back(x);
         }
         vector<Point> getAlterPathAt(int currX, int currY, bool behind) {
+            
             vector<Point> cc;
             int r = 0;
             for(int x = 0; x < this -> path.size(); x++) {
@@ -94,9 +101,10 @@ class ActiveUnit : public Piece {
                 return cc;
             }
 
+                cout << "Alter Path " <<this -> getAlterPathLoc().size()<<  " <= "<< r  << endl;
+
             int start = this -> getAlterPathLoc().at(r);
             int end = this -> getAlterPathLoc().at(r+1);
-
             for(int x = start; x < end; x++) {
                 cc.push_back(this -> getAlterPath().at(x));
             }

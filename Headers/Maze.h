@@ -10,8 +10,8 @@
 
 using namespace std;
 
-const int ROWCOUNT = 5;
-const int COLCOUNT = 4;
+const int ROWCOUNT = 16;
+const int COLCOUNT = 21;
 
 class Maze {
     private:
@@ -19,8 +19,16 @@ class Maze {
         vector<ActiveUnit*> solvedPieces;
         Piece *board[ROWCOUNT][COLCOUNT];
         Maze* maze;
+        bool change;
     protected:
     public:
+        bool getChange() {
+            return this -> change;
+        }
+        void setChange(bool c) {
+            this -> change = c;
+        }
+        bool doesDestInterfere(ActiveUnit*);
         bool isPrivateZone(ActiveUnit*, Point);
         bool isBringBlank(ActiveUnit*);
         void createBlank(ActiveUnit*,int, int, vector<Point>);
@@ -36,9 +44,9 @@ class Maze {
         char ** getSimpleMatrix();
         void addActive(ActiveUnit) ;
         void setUp();
-        void sortActivePieces();
+        void getPriority();
         void doProgression();
-        void doRegression();
+        void doRepositioning();
         bool stillActive(){ if(activePieces.size() != 0){ return true; } return false; };
         bool isAlterPathAvail(vector<Point> , char** );
 };
